@@ -1,0 +1,27 @@
+{
+  "manifest_version": 2,
+
+  "name": "Selective Facebook Blocker",
+  "description": "Allows the user to selectively block portions of Facebook",
+  "version": "1.0",
+
+
+  "background":{
+    "scripts": ["background.js"],
+    "persistent": false
+  },
+
+  "page_action":{
+    "default_icon": "icon.png", //icon is ugly
+    "default_title": "Selective Facebook blocker",
+    "default_popup": "popup.html"
+  },
+
+
+  //may need to get rid of some restrictions
+  "permissions": [
+    "activeTab",
+    "storage",
+    "declarativeContent"
+  ]
+}
