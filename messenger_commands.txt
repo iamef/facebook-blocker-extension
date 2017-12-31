@@ -1,0 +1,19 @@
+chat class name in messenger
+_5l-3 _1ht1
+
+<a class="_1ht5 _2il3 _5l-3 _3itx" role="link" tabindex="-1" data-href="https://www.facebook.com/messages/t/starkillr241">
+
+
+
+<div aria-hidden="true" class="_1qt3 _5l-3">
+
+<div class="_4ldz" style="height: 50px; width: 50px;"><div class="_4ld-" style="height: 50px; width: 50px;">
+
+<div class="_55lt" size="50" style="width: 50px; height: 50px;"><img src="https://scontent.fsnc1-1.fna.fbcdn.net/v/t1.0-1/p100x100/24899732_2026951467541770_3960988479485545207_n.jpg?oh=1df85da02ef007bcb534037544e6aaec&amp;oe=5AB0D08C" width="50" height="50" alt="" class="img"></div></div></div></div><div class="_1qt4 _5l-m"><div class="_1qt5 _5l-3"><span class="_1ht6">Deep Sethi</span><div><abbr class="_1ht7 timestamp" title="Today" data-utime="1514448509.984">12:08am</abbr></div></div><div class="_1qt5 _5l-3"><span class="_1htf">You: <span>do you mind explaining? or would you rather not say?</span></span></div></div></a>
+
+THIS WORKS: document.querySelectorAll('[data-href="https://www.facebook.com/messages/t/starkillr241"]')[0].parentElement.parentElement.style.display = "none"
+
+HAHA on messenger you have to
+document.querySelectorAll('[data-href="https://www.messenger.com/t/avinAshKetchum"]')[0]
+
+haven't figured out something exactly for the main page but I'll try to figure something out

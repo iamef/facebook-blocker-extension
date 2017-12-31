@@ -11,17 +11,30 @@
     "persistent": false
   },
 
-  "page_action":{
+  //would prefer to do a browser action 
+  //because you can access the popup from anywhere
+  "browser_action":{
     "default_icon": "icon.png", //icon is ugly
-    "default_title": "Selective Facebook blocker",
-    "default_popup": "popup.html"
+    "default_title": "Selective Facebook blocker"
   },
+
+  //these run when the pages reload or are open
+  //is not called when we change tabs
+  "content_scripts": [{
+    "matches": ["*://*.facebook.com/*", "*://*.messenger.com/*"],
+    "js": ["content.js"],
+    "run_at": "document_start"
+  }],
 
 
   //may need to get rid of some restrictions
   "permissions": [
+    "tabs",
     "activeTab",
     "storage",
-    "declarativeContent"
+    "declarativeContent",
+    "*://*.facebook.com/*",
+    "*://*.facebook.com/", 
+    "*://*.messenger.com/*"
   ]
 }
