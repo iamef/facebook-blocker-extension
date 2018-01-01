@@ -1,0 +1,31 @@
+/*removes the sidebar completely*/
+/*id confirmed*/
+/*#pagelet_sidebar{
+    display: none;
+}*/
+
+/*id confirmed*/
+/*
+#u_0_v{
+    display: none;
+}
+*/
+
+/*removes sidebar but has the search*/
+.fbChatSidebarBody{
+    display: none;
+}
+
+/*removes the flyout completely*/
+/*id confirmed*/
+/*
+#BuddylistPagelet{
+    display: none;
+}
+*/
+
+/*removes the flyout content*/
+/*id confirmed*/
+#u_0_21{
+    display: none;
+}

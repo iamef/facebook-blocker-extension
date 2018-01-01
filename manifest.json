@@ -22,7 +22,8 @@
   //is not called when we change tabs
   "content_scripts": [{
     "matches": ["*://*.facebook.com/*", "*://*.messenger.com/*"],
-    "js": ["content.js"],
+    "css": ["content.css"],
+    //"js": ["content.js"],
     "run_at": "document_start"
   }],
 
