@@ -1,0 +1,18 @@
+/*removes the friend request, messages, and earth icons*/
+/*
+doesn't work because there are more than just for the notifications
+._cy6 ._4kny{
+    so ._cy6 is the parent class, and ._4kny is a child of ._cy6
+    display: none;
+}*/
+
+.uiToggle._4962{
+/*    so basically contains both classes*/
+    display: none;
+}
+
+/*
+doesn't work
+title{
+    content: Fabs;
+}*/

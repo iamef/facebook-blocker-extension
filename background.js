@@ -21,18 +21,34 @@
 
     });
 });*/
-//I should check if it is a facebook file
+chrome.browserAction.onClicked.addListener(function(activeTab)
+{
+    var onNewTab = false;
+    //console.log("onClicked");
+    chrome.tabs.query({active: true}, function(tabs){
+        console.log(tabs);
+        tab = tabs[0];
+        console.log(tab.url);
+        if(tab.url == 'chrome://newtab/'){
+            //alert("new tab is true?")
+            chrome.tabs.update(tab.id, {url: "popup.html"});
+        }else{
+            chrome.tabs.create({ url: "popup.html"});
+            
+        }
+    });
+    
+});
 
-/*chrome.runtime.onMessage.addListener(
+chrome.runtime.onMessage.addListener(
   function(request, sender, sendResponse) {
-    console.log(sender.tab ?
-                "from a content script:" + sender.tab.url :
-                "from the extension");
-    if (request.greeting == "hello")
-      sendResponse({farewell: "goodbye"});
-  });*/
+    console.log(request);
+    console.log(sender);
+    sendResponse({received: "onFacebook"});
+    //alert("Are you sure you want to be on Facebook right now?");
+  });
 
-chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
+/*chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
     //alert("received");
     console.log(request);
     console.log(sender);
@@ -40,9 +56,10 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
     
     //alert("arrived");
     
-    chrome.tabs.executeScript(null, {"file": "removeChat.js"});
-    chrome.tabs.executeScript(null, {"file": "removeTitleNotifications.js"});
-});
+    /*chrome.tabs.executeScript(null, {"file": "removeChat.js"});
+    chrome.tabs.executeScript(null, {"file": "removeTitleNotifications.js"});*//*
+    chrome.tabs.update({url: "popup.html"});
+});*/
 
 
 
@@ -69,3 +86,4 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
   //why is the first element null?
   chrome.tabs.executeScript(null, {"file": "removeChat.js"});
 });*/
+

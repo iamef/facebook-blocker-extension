@@ -16,14 +16,15 @@
   "browser_action":{
     "default_icon": "icon.png", //icon is ugly
     "default_title": "Selective Facebook blocker"
+    //"default_popup": "popup.html"
   },
 
   //these run when the pages reload or are open
   //is not called when we change tabs
   "content_scripts": [{
     "matches": ["*://*.facebook.com/*", "*://*.messenger.com/*"],
-    "css": ["content.css"],
-    //"js": ["content.js"],
+    "css": ["chatContent.css", "notificationsContent.css"],
+    "js": ["content.js"],
     "run_at": "document_start"
   }],
 
