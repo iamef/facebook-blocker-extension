@@ -4,7 +4,11 @@
   "name": "Selective Facebook Blocker",
   "description": "Allows the user to selectively block portions of Facebook",
   "version": "0.0.0.1",
-
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
 
   "background":{
     "scripts": ["background.js"],
@@ -15,7 +19,11 @@
   //would prefer to do a browser action 
   //because you can access the popup from anywhere
   "browser_action":{
-    "default_icon": "icon.png", //icon is ugly
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    }, //icon is ugly
     "default_title": "Selective Facebook blocker"
     //"default_popup": "popup.html"
   },
