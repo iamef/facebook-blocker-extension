@@ -3,13 +3,14 @@
 
   "name": "Selective Facebook Blocker",
   "description": "Allows the user to selectively block portions of Facebook",
-  "version": "1.0",
+  "version": "0.0.0.1",
 
 
   "background":{
     "scripts": ["background.js"],
     "persistent": false
   },
+    
 
   //would prefer to do a browser action 
   //because you can access the popup from anywhere
