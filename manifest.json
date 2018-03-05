@@ -34,7 +34,7 @@
     "matches": ["*://*.facebook.com/*", "*://*.messenger.com/*"],
     "css": ["chatContent.css", "notificationsContent.css"],
     "js": ["content.js"],
-    "run_at": "document_start"
+    "run_at": "document_end"
   }],
 
 
