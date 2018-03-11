@@ -29,3 +29,8 @@
 #u_0_21{
     display: none;
 }
+
+/*removes Deep's name hopefully*/
+[data-href$="starkillr241"]{
+  display: none;
+}
