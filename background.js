@@ -202,25 +202,23 @@ function updateTime(){
     
 }
     
-function test(){
-    return "hello";
-}
-    
-function timeString(){
-    var secondsPassed = accumulatedTime;
-    //console.log(startTime)
-    //console.log(accumulatedTime);
-    //console.log(secondsPassed);
-    var minutes = Math.floor(secondsPassed / 60);
-    var seconds = Math.floor(secondsPassed % 60);
-    
-    var displayString = "";
-    
-    if(seconds < 10)
-        displayString= minutes + ":0" + seconds;
-    else
-        displayString= minutes + ":" + seconds;
-    //alert(displayString);
-    return displayString;
-}
-
+//moved to popup.js
+//function timeString(){
+//    var secondsPassed = accumulatedTime;
+//    //console.log(startTime)
+//    //console.log(accumulatedTime);
+//    //console.log(secondsPassed);
+//    
+//    var minutes = Math.floor(secondsPassed / 60);
+//    var seconds = Math.floor(secondsPassed % 60);
+//    
+//    var displayString = "";
+//    
+//    if(seconds < 10)
+//        displayString= minutes + ":0" + seconds;
+//    else
+//        displayString= minutes + ":" + seconds;
+//    //alert(displayString);
+//    return displayString;
+//}
+//

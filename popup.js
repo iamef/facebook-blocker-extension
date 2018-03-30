@@ -1,18 +1,41 @@
-/*alert("popup.js");
-console.log("aqui");
-var links = document.getElementsByTagName('a');
+var elem = document.getElementById("timeSpent");
 
-var extensionID = 'nddlelglajjgaeinikojccdelodeoedo';
-var sendMessageMethod = function(){
-    alert("clicked");
-    console.log("clicked");
-    chrome.runtime.sendMessage(extensionID, {fromPopup: true}, function(response){
-       console.log(response); 
-    });
-};
+var accumulatedTime;
+var accumulatedTimeKey='accTimeMS';
 
-for(var i = 0; i < links.length; i++){
-    //alert("over here");
+chrome.storage.sync.get(accumulatedTimeKey, function(items){
+    console.log(items[accumulatedTimeKey]);
+    accumulatedTime = items[accumulatedTimeKey];
+    /*console.log(chrome.runtime.lastError);
+    console.log(items[accumulatedTimeKey]);
+
+    return (chrome.runtime.lastError ? 0 : items[accumulatedTimeKey]);*/
     
-    links[i].onclick = sendMessageMethod;
-}*/
+    //must be put in here because it is asynchronous
+    elem.innerHTML=elem.innerHTML+" "+timeString();
+
+});
+
+
+function timeString(){
+    var secondsPassed = accumulatedTime;
+    //console.log(startTime)
+    //console.log(accumulatedTime);
+    //console.log(secondsPassed);
+    
+    var minutes = Math.floor(secondsPassed / 60);
+    var seconds = Math.floor(secondsPassed % 60);
+    
+    var displayString = "";
+    
+    displayString= minutes + "m " + seconds + "s";
+
+    /*
+    if(seconds < 10)
+        displayString= minutes + ":0" + seconds;
+    else
+        displayString= minutes + ":" + seconds;*/
+    //alert(displayString);
+    return displayString;
+}
+
