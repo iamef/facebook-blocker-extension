@@ -1,26 +1,4 @@
-//when the extension is installed
-/*chrome.runtime.onInstalled.addListener(function (){
-    //removes all the rules and calls a new function
-    chrome.declarativeContent.onPageChanged.removeRules(undefined, () => {
-      //the function makes a new rule
-      chrome.declarativeContent.onPageChanged.addRules([
-        {
-          conditions:[
-            //oh yay it has two conditions and the conditions are or conditions :)
-            new chrome.declarativeContent.PageStateMatcher({
-              pageUrl: {hostContains: "facebook"}
-            }),
-            new chrome.declarativeContent.PageStateMatcher({
-              pageUrl: {hostContains: "messenger"}
-            })
-          ],
-
-          actions: [new chrome.declarativeContent.ShowPageAction()]
-        }
-      ]);
-
-    });
-});*/
+//fires when the extension is clicked
 chrome.browserAction.onClicked.addListener(function(activeTab)
 {
     var onNewTab = false;
@@ -40,10 +18,37 @@ chrome.browserAction.onClicked.addListener(function(activeTab)
     
 });
 
-//continue FROM HERE
+//gets the active tab
 chrome.tabs.query({active: true, currentWindow: true}, function(tabs){
-    chrome.tabs.sendMessage(tabs[0].id, {action: "open_dialog_box"}, function(response) {});  
+    //alert(tabs[0]);
 });
+
+var setIntervalTimer; //NOW I NEED TO GET RID OF THIS... and clear this later on
+//checks if the tab is changed
+chrome.tabs.onActivated.addListener(function(info){
+    chrome.tabs.get(info.tabId, function (tab){
+        //console.log("Hello");
+        
+        url = new URL(tab.url);
+        
+        //alert(url.host.indexOf(".facebook."));
+        
+        if(url.host.indexOf(".facebook.") != -1 || url.host.indexOf(".messenger.") != -1){
+            alert("on Facebook");
+            setIntervalTimer = setInterval(updateTime, 1000);
+        }
+        
+    });
+    
+});
+
+//checks if tab updates to contain Facebook
+chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab){
+    if(url.host.indexOf(".facebook.") != -1 || url.host.indexOf(".messenger.") != -1){
+            alert("on Facebook");
+    }
+});
+
 
 /*chrome.tabs.onRemoved.addListener(function(tabid, removed) {
     alert("tab Removed");
@@ -59,7 +64,7 @@ chrome.tabs.query({active: true, currentWindow: true}, function(tabs){
    /*chrome.runtime.sendMessage(extensionID, {fromPopup: true}, function(response){
            console.log(response); 
         });
-
+ 
 /*chrome.runtime.onMessage.addListener(
   function(request, sender, sendResponse) {
     console.log(request);
@@ -106,4 +111,85 @@ chrome.tabs.query({active: true, currentWindow: true}, function(tabs){
   //why is the first element null?
   chrome.tabs.executeScript(null, {"file": "removeChat.js"});
 });*/
+
+
+///////////////////////////////////TIMER STUFFF////////
+
+////////////TIMER STUFF//////////
+
+//var displayTime;
+
+var accumulatedTime;
+var accumulatedTimeKey='accTimeMS'
+
+
+function startTimer(){
+    chrome.storage.sync.get(accumulatedTimeKey, function(items){
+        console.log(items[accumulatedTimeKey]);
+        accumulatedTime = items[accumulatedTimeKey];
+        /*console.log(chrome.runtime.lastError);
+        console.log(items[accumulatedTimeKey]);
+        
+        return (chrome.runtime.lastError ? 0 : items[accumulatedTimeKey]);*/
+    });
+    console.log(accumulatedTime);
+    
+    if(accumulatedTime == undefined || isNaN(accumulatedTime)){   
+        accumulatedTime = 0;
+    }
+    console.log(accumulatedTime);
+    console.log(typeof(accumulatedTime));
+    console.log(isNaN(accumulatedTime));
+}
+
+function storeAccumulatedTime(){
+    var items = {};
+    if(accumulatedTime == undefined || isNaN(accumulatedTime)){   
+        accumulatedTime = 0;
+    }
+    items[accumulatedTimeKey] = accumulatedTime;
+    
+    console.log(items);
+    
+    chrome.storage.sync.set(items, function(){
+        console.log("saved " + accumulatedTime);
+        //console.log(accumulatedTime);
+        console.log(typeof(accumulatedTime));
+        console.log(isNaN(accumulatedTime));
+        
+    });
+}
+
+
+
+function updateTime(){
+    if(accumulatedTime == undefined || isNaN(accumulatedTime)){   
+        accumulatedTime = 0;
+    }
+    accumulatedTime+=1;
+    storeAccumulatedTime();
+    
+}
+    
+function test(){
+    return "hello";
+}
+    
+function timeString(){
+    var secondsPassed = accumulatedTime;
+    //console.log(startTime)
+    //console.log(accumulatedTime);
+    //console.log(secondsPassed);
+    var minutes = Math.floor(secondsPassed / 60);
+    var seconds = Math.floor(secondsPassed % 60);
+    
+    var displayString = "";
+    
+    if(seconds < 10)
+        displayString= minutes + ":0" + seconds;
+    else
+        displayString= minutes + ":" + seconds;
+    //alert(displayString);
+    return displayString;
+}
 
