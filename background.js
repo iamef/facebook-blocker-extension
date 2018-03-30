@@ -24,19 +24,22 @@ chrome.tabs.query({active: true, currentWindow: true}, function(tabs){
 });
 
 var setIntervalTimer; //NOW I NEED TO GET RID OF THIS... and clear this later on
+var timerOn = false; //USAR
+
 //checks if the tab is changed
 chrome.tabs.onActivated.addListener(function(info){
     chrome.tabs.get(info.tabId, function (tab){
         //console.log("Hello");
         
-        url = new URL(tab.url);
-        
-        //alert(url.host.indexOf(".facebook."));
-        
-        if(url.host.indexOf(".facebook.") != -1 || url.host.indexOf(".messenger.") != -1){
-            alert("on Facebook");
-            setIntervalTimer = setInterval(updateTime, 1000);
-        }
+//        url = new URL(tab.url);
+//        
+//        //alert(url.host.indexOf(".facebook."));
+//        
+//        if(url.host.indexOf(".facebook.") != -1 || url.host.indexOf(".messenger.") != -1){
+//            alert("on Facebook");
+//            setIntervalTimer = setInterval(updateTime, 1000);
+//        }
+        dealWithTimer(tab);
         
     });
     
@@ -44,10 +47,38 @@ chrome.tabs.onActivated.addListener(function(info){
 
 //checks if tab updates to contain Facebook
 chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab){
-    if(url.host.indexOf(".facebook.") != -1 || url.host.indexOf(".messenger.") != -1){
-            alert("on Facebook");
-    }
+    //url = new URL(tab.url);
+    
+//    if(url.host.indexOf(".facebook.") != -1 || url.host.indexOf(".messenger.") != -1){
+//            alert("on Facebook");
+//    }
+    dealWithTimer(tab);
 });
+
+
+function dealWithTimer(tab){
+    if(onFacebook(tab)){
+        if(!timerOn){
+            alert("on facebook and timer was off");
+            setIntervalTimer = setInterval(updateTime, 1000);
+            timerOn=true;
+        }else{
+            alert("on FB timer on");
+        }
+    //not on Facebook
+    }else{
+        if(timerOn){
+            alert("should turn timer off");
+            clearTimeout(setIntervalTimer);
+            timerOn=false;
+        }
+    }
+}
+
+function onFacebook(tab){
+    url = new URL(tab.url);
+    return (url.host.indexOf(".facebook.") != -1 || url.host.indexOf(".messenger.") != -1);
+}
 
 
 /*chrome.tabs.onRemoved.addListener(function(tabid, removed) {
