@@ -28,6 +28,13 @@ function timeString(){
     
     var displayString = "";
     
+    if(isNaN(minutes)){
+        minutes=0;
+    }
+    if(isNaN(seconds)){
+        seconds=0;
+    }
+    
     displayString= minutes + "m " + seconds + "s";
 
     /*
