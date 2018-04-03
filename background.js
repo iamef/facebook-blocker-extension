@@ -60,6 +60,7 @@ function dealWithTimer(tab){
     if(onFacebook(tab)){
         if(!timerOn){
 //            alert("on facebook and timer was off");
+            startTimer();
             setIntervalTimer = setInterval(updateTime, 1000);
             timerOn=true;
         }else{
