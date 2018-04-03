@@ -1,5 +1,6 @@
 var elem = document.getElementById("timeSpent");
 elem.onclick= clearTime;
+//elem.onmouseover=updateTimeString;
 
 var accumulatedTime;
 var accumulatedTimeKey='accTimeMS';

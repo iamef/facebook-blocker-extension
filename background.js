@@ -59,16 +59,16 @@ chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab){
 function dealWithTimer(tab){
     if(onFacebook(tab)){
         if(!timerOn){
-            alert("on facebook and timer was off");
+//            alert("on facebook and timer was off");
             setIntervalTimer = setInterval(updateTime, 1000);
             timerOn=true;
         }else{
-            alert("on FB timer on");
+            //alert("on FB timer on");
         }
     //not on Facebook
     }else{
         if(timerOn){
-            alert("should turn timer off");
+//            alert("should turn timer off");
             clearTimeout(setIntervalTimer);
             timerOn=false;
         }
