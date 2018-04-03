@@ -1,20 +1,52 @@
 var elem = document.getElementById("timeSpent");
+elem.onclick= clearTime;
 
 var accumulatedTime;
 var accumulatedTimeKey='accTimeMS';
 
-chrome.storage.sync.get(accumulatedTimeKey, function(items){
-    console.log(items[accumulatedTimeKey]);
-    accumulatedTime = items[accumulatedTimeKey];
-    /*console.log(chrome.runtime.lastError);
-    console.log(items[accumulatedTimeKey]);
+updateTimeString();
 
-    return (chrome.runtime.lastError ? 0 : items[accumulatedTimeKey]);*/
+
+function updateTimeString(){
+    chrome.storage.sync.get(accumulatedTimeKey, function(items){
+        console.log(items[accumulatedTimeKey]);
+        accumulatedTime = items[accumulatedTimeKey];
+        /*console.log(chrome.runtime.lastError);
+        console.log(items[accumulatedTimeKey]);
+
+        return (chrome.runtime.lastError ? 0 : items[accumulatedTimeKey]);*/
+
+        //must be put in here because it is asynchronous
+        elem.innerHTML="Time spent on Facebook: "+timeString();
+
+    });
+}
+
+function clearTime(){
+    var okClicked = window.confirm("Should the time be cleared?");
+    if(okClicked){
+        storeClearedTime();
+        updateTimeString();
+    }
+}
+
+function storeClearedTime(){
+    var items = {};
     
-    //must be put in here because it is asynchronous
-    elem.innerHTML=elem.innerHTML+" "+timeString();
-
-});
+    accumulatedTime = 0;
+    
+    items[accumulatedTimeKey] = accumulatedTime;
+    
+    //console.log(items);
+    
+    chrome.storage.sync.set(items, function(){
+        console.log("saved " + accumulatedTime);
+        console.log(items);
+        //console.log(typeof(accumulatedTime));
+        //console.log(isNaN(accumulatedTime));
+        
+    });
+}
 
 
 function timeString(){

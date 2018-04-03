@@ -44,6 +44,24 @@
                 color: white;
             }
             
+            #timeSpentTip {
+                visibility: hidden;
+                width: 120px;
+                background-color: black;
+                color: #fff;
+                text-align: center;
+                border-radius: 6px;
+                padding: 5px 0;
+
+                /* Position the tooltip */
+                position: absolute;
+                z-index: 1;
+            }
+
+            #timespent:hover #timeSpentTip {
+                visibility: visible;
+            }
+            
             
         </style>
         
@@ -58,7 +76,9 @@
             <li><a href="https://www.facebook.com/"><div>Make a Facebook post/Check facebook feed</div></a></li>
             <li><a href="https://www.facebook.com/notifications"><div>Check notifications</div></a></li>
             <!--I may want to change the format for this one-->
-            <li id="timeSpent">Time spent on Facebook: </li>
+            <li id="timeSpent">Time spent on Facebook: 
+                  <span id="timeSpentTip">Tooltip text</span>
+            </li>
             <li><a href=""></a></li>
             <li><a href=""></a></li>
             <!--other ideas: check if someone replied to a message, friend someone, scroll through FB feed, check a facebook group-->
