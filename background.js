@@ -4,7 +4,7 @@ chrome.browserAction.onClicked.addListener(function(activeTab)
     var onNewTab = false;
     //console.log("onClicked");
     chrome.tabs.query({active: true}, function(tabs){
-        console.log(tabs);
+        //console.log(tabs);
         tab = tabs[0];
         console.log(tab.url);
         if(tab.url == 'chrome://newtab/'){
@@ -52,14 +52,27 @@ chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab){
 //    if(url.host.indexOf(".facebook.") != -1 || url.host.indexOf(".messenger.") != -1){
 //            alert("on Facebook");
 //    }
+    //console.log(changeInfo);
     dealWithTimer(tab);
 });
 
+//checks if we change to a different window which might contain Facebook
+//works when windows are removed and created and so forth
+chrome.windows.onFocusChanged.addListener(function(windowId){
+    //alert("window focus changed");
+    chrome.tabs.query({active: true}, function(tabs){
+        tabs.forEach(function(tab){
+            if(tab.windowId == windowId){
+                dealWithTimer(tab);
+            }
+        })
+    });
+});
 
 function dealWithTimer(tab){
     if(onFacebook(tab)){
         if(!timerOn){
-//            alert("on facebook and timer was off");
+            //alert("on facebook and timer was off");
             startTimer();
             setIntervalTimer = setInterval(updateTime, 1000);
             timerOn=true;
@@ -69,7 +82,7 @@ function dealWithTimer(tab){
     //not on Facebook
     }else{
         if(timerOn){
-//            alert("should turn timer off");
+            //alert("should turn timer off");
             clearTimeout(setIntervalTimer);
             timerOn=false;
         }
@@ -77,7 +90,27 @@ function dealWithTimer(tab){
 }
 
 function onFacebook(tab){
+    //criteria: the tab must be active
+    //the window must be focused
+    //it must be a FB url
+    
+    
+    if(!tab.active){
+        alert("the tab is not active");
+        return false;
+    }
+    
+    //don't think this is necessary since there is a windows listener now
+    /*chrome.windows.getCurrent( function(window){
+       if(tab.windowId != window.id){
+           alert("tab passed in doesn't have the same window ID");
+       }
+        //console.log("tab windowID:" + tab.windowId + " current windowID:" + window.id); 
+    });*/
+    
     url = new URL(tab.url);
+    
+    
     return (url.host.indexOf(".facebook.") != -1 || url.host.indexOf(".messenger.") != -1);
 }
 
