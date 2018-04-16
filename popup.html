@@ -2,16 +2,30 @@
 <html>
     <head>
         <style type="text/css">
-            li{
-                list-style-type:none;
+            #settingsIcon{
+                height: 30px;
+                float: right;
+                margin-right: 5px;
+                padding: 3px;
             }
             
-            div{
+            #settingsIcon:hover{
+                
+                background-color: lightgrey;
+                border-radius: 20%;
+            }
+            
+            li{
+                list-style-type:none;
                 text-align: center;
                 margin: 5px;
                 padding: 10px;
                 background-color: royalblue;
                 border-radius: 10px;
+            }
+            
+            div{
+                
             }
             
             h1{
@@ -62,6 +76,9 @@
                 visibility: visible;
             }
             
+            #settings{
+                display: none;
+            }
             
         </style>
         
@@ -69,7 +86,8 @@
     </head>
     
     <body>
-        <h1>Why are you going on Facebook?</h1>
+        <h1>Why are you going on Facebook?<img id="settingsIcon" src="icons/settingsIcon.png"></h1>
+        
         <ul>
             <li><a href="https://www.facebook.com/messages"><div>Message someone</div></a></li>
             
@@ -79,8 +97,12 @@
             <li id="timeSpent">Time spent on Facebook: 
                   <span id="timeSpentTip">Tooltip text</span>
             </li>
-            <li><a href=""></a></li>
-            <li><a href=""></a></li>
+            
+            <div id="settings">
+                <li><a href=""></a></li>
+                <li><a href=""></a></li>
+            </div>
+            
             <!--other ideas: check if someone replied to a message, friend someone, scroll through FB feed, check a facebook group-->
         </ul>
         

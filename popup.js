@@ -1,6 +1,7 @@
-var elem = document.getElementById("timeSpent");
-elem.onclick= clearTime;
-//elem.onmouseover=updateTimeString;
+/*TIMER INFORMATION*/
+var timeSpentElem = document.getElementById("timeSpent");
+timeSpentElem.onclick= clearTime;
+//timeSpentElem.onmouseover=updateTimeString;
 
 var accumulatedTime;
 var accumulatedTimeKey='accTimeMS';
@@ -18,7 +19,7 @@ function updateTimeString(){
         return (chrome.runtime.lastError ? 0 : items[accumulatedTimeKey]);*/
 
         //must be put in here because it is asynchronous
-        elem.innerHTML="Time spent on Facebook: "+timeString();
+        timeSpentElem.innerHTML="Time spent on Facebook: "+timeString();
 
     });
 }
@@ -79,3 +80,15 @@ function timeString(){
     return displayString;
 }
 
+/*SETTINGS INFORMATION*/
+//settings icon
+var settingsIconElem = document.getElementById("settingsIcon");
+settingsIconElem.onclick = function(){
+    var settingsDisplay = document.getElementById("settings").style.display;
+    if(settingsDisplay != "none" && settingsDisplay != ""){
+        //the variable is not a pointer so we must use this instead :cry-face:
+        document.getElementById("settings").style.display = "none";
+    }else{
+        document.getElementById("settings").style.display = 'block';
+    }
+}
