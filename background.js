@@ -1,18 +1,22 @@
+//fires when the extension is updated
+chrome.runtime.onInstalled.addListener(function(details){
+    if(details.reason == "update"){
+        alert("Extension Updated:\n"+
+              "\nTimer now stops when Facebook tab is minimized."+
+             "\nAdded settings page for customizations.");
+    }
+});
+
 //fires when the extension is clicked
 chrome.browserAction.onClicked.addListener(function(activeTab)
 {
     var onNewTab = false;
-    //console.log("onClicked");
     chrome.tabs.query({active: true}, function(tabs){
-        //console.log(tabs);
         tab = tabs[0];
-        console.log(tab.url);
         if(tab.url == 'chrome://newtab/'){
-            //alert("new tab is true?")
             chrome.tabs.update(tab.id, {url: "popup.html"});
         }else{
             chrome.tabs.create({ url: "popup.html"});
-            
         }
     });
     
@@ -23,7 +27,7 @@ chrome.tabs.query({active: true, currentWindow: true}, function(tabs){
     //alert(tabs[0]);
 });
 
-var setIntervalTimer; //NOW I NEED TO GET RID OF THIS... and clear this later on
+var setIntervalTimer; //set this variable to the setIntervalTimer so I could clear it later
 var timerOn = false; //USAR
 
 //checks if the tab is changed
@@ -59,9 +63,14 @@ chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab){
 //checks if we change to a different window which might contain Facebook
 //works when windows are removed and created and so forth
 chrome.windows.onFocusChanged.addListener(function(windowId){
-    //alert("window focus changed");
+    if(windowId == chrome.windows.WINDOW_ID_NONE){
+        dealWithTimer(-1);
+        
+    }
     chrome.tabs.query({active: true}, function(tabs){
+        
         tabs.forEach(function(tab){
+            console.log("tabWId: " + tab.windowId + ", WID: "+windowId +", url " +tab.url);
             if(tab.windowId == windowId){
                 dealWithTimer(tab);
             }
@@ -72,19 +81,16 @@ chrome.windows.onFocusChanged.addListener(function(windowId){
 function dealWithTimer(tab){
     if(onFacebook(tab)){
         if(!timerOn){
-            //alert("on facebook and timer was off");
+            alert("on facebook and timer was off");
             startTimer();
-            setIntervalTimer = setInterval(updateTime, 1000);
-            timerOn=true;
         }else{
             //alert("on FB timer on");
         }
     //not on Facebook
     }else{
         if(timerOn){
-            //alert("should turn timer off");
-            clearTimeout(setIntervalTimer);
-            timerOn=false;
+            alert("should turn timer off");
+            stopTimer();
         }
     }
 }
@@ -95,8 +101,8 @@ function onFacebook(tab){
     //it must be a FB url
     
     
-    if(!tab.active){
-        alert("the tab is not active");
+    if(tab == -1 || !tab.active){
+        //alert("the tab is not active");
         return false;
     }
     
@@ -205,6 +211,15 @@ function startTimer(){
     console.log(accumulatedTime);
     console.log(typeof(accumulatedTime));
     console.log(isNaN(accumulatedTime));
+    
+    setIntervalTimer = setInterval(updateTime, 1000);
+    timerOn=true;
+}
+
+function stopTimer(){
+    storeAccumulatedTime();
+    clearTimeout(setIntervalTimer);
+    timerOn=false;
 }
 
 function storeAccumulatedTime(){
@@ -232,7 +247,7 @@ function updateTime(){
         accumulatedTime = 0;
     }
     accumulatedTime+=1;
-    storeAccumulatedTime();
+    //storeAccumulatedTime();
     
 }
     
