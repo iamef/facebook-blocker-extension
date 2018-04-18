@@ -6,8 +6,9 @@ timeSpentElem.onclick= clearTime;
 var accumulatedTime;
 var accumulatedTimeKey='accTimeMS';
 
+document.getElementById("saveSettings").onclick = saveSettings;
 updateTimeString();
-
+updateSettingsDisplay();
 
 function updateTimeString(){
     chrome.storage.sync.get(accumulatedTimeKey, function(items){
@@ -21,6 +22,33 @@ function updateTimeString(){
         //must be put in here because it is asynchronous
         timeSpentElem.innerHTML="Time spent on Facebook: "+timeString();
 
+    });
+}
+
+var enabledKey='enabled'
+
+function updateSettingsDisplay(){
+    chrome.storage.sync.get(enabledKey, function(items){
+        var enabled = items[enabledKey];
+        if(enabled==undefined){
+            alert("enabled: "+enabled);
+            enabled=true;
+        }
+        
+        document.getElementById("enabled").checked=enabled;
+        
+    });
+}
+
+function saveSettings(){
+    //Enabled settings
+        
+    var enabled = document.getElementById('enabled').checked;
+    var items = {};
+    items[enabledKey] = enabled;
+    
+    chrome.storage.sync.set(items, function() {
+          alert("Enabled settings submitted, enabled = " + enabled);
     });
 }
 
@@ -84,11 +112,11 @@ function timeString(){
 //settings icon
 var settingsIconElem = document.getElementById("settingsIcon");
 settingsIconElem.onclick = function(){
-    var settingsDisplay = document.getElementById("settings").style.display;
+    var settingsDisplay = document.getElementById("settingsDiv").style.display;
     if(settingsDisplay != "none" && settingsDisplay != ""){
         //the variable is not a pointer so we must use this instead :cry-face:
-        document.getElementById("settings").style.display = "none";
+        document.getElementById("settingsDiv").style.display = "none";
     }else{
-        document.getElementById("settings").style.display = 'block';
+        document.getElementById("settingsDiv").style.display = 'block';
     }
 }

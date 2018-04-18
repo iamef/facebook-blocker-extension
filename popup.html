@@ -76,9 +76,14 @@
                 visibility: visible;
             }
             
-            #settings{
+            #settingsDiv{
                 display: none;
             }
+            
+            .settingsSpan{
+                padding-left: 5px;
+            }
+            
             
         </style>
         
@@ -98,9 +103,26 @@
                   <span id="timeSpentTip">Tooltip text</span>
             </li>
             
-            <div id="settings">
-                <li><a href=""></a></li>
-                <li><a href=""></a></li>
+            <div id="settingsDiv">
+                <h1>Settings</h1>
+                <p><label for=""><input type="checkbox" id="enabled"><span class="settingsSpan">Enable Blocking</span></label></p>
+                
+<!--
+                <h3>General Blocking</h3>
+                <p><label for=""><input type="checkbox"><span class="settingsSpan">Block notifications on the top bar (globe and messaging icon)</span></label></p>
+                <p><label for=""><input type="checkbox"><span class="settingsSpan">Block chat</span></label></p>
+                <p>&nbsp;&nbsp;&nbsp;&nbsp;<label for=""><input type="checkbox"></label><span class="settingsSpan">Block chat entirely (Chat will not show when other people message you)</span></p>
+                
+                <h3>Home Page</h3>
+                <p><label for=""><input type="checkbox"><span class="settingsSpan">News feed</span></label></p>
+                
+                <h3>Messaging Page</h3>
+                <p><label for=""><input type="checkbox"><span class="settingsSpan">Redirect to messenger.com rather than facebook.com/messages</span></label></p>
+                <p><label for=""><input type="checkbox"><span class="settingsSpan">Block recent messages</span></label></p>
+-->
+                
+                <input type="submit" value="Save" id="saveSettings">
+                
             </div>
             
             <!--other ideas: check if someone replied to a message, friend someone, scroll through FB feed, check a facebook group-->
