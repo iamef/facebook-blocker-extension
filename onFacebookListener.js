@@ -15,8 +15,8 @@ chrome.runtime.onMessage.addListener(function(message, sender, sendResponse){
 function runEnabled(enabled){
     if(!enabled){
         //need to make sure that notifications are on and chat is on
-        chrome.tabs.insertCSS(null, {file: "undoChatContentReg.css"});
-        chrome.tabs.insertCSS(null, {file: "undoNotificationsContent.css"});
+        chrome.tabs.insertCSS(null, {file: "blockingCSS/undoChatContentReg.css"});
+        chrome.tabs.insertCSS(null, {file: "blockingCSS/undoNotificationsContent.css"});
     }
 }
 

@@ -28,7 +28,7 @@
   
   "content_scripts": [{
     "matches": ["*://*.facebook.com/*", "*://*.messenger.com/*"],
-    "css": ["chatContent.css", "notificationsContent.css"],
+    "css": ["blockingCSS/chatContent.css", "blockingCSS/notificationsContent.css"],
     "js": ["onFacebook.js"],
     "run_at": "document_end"
   }],
