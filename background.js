@@ -3,7 +3,7 @@ chrome.runtime.onInstalled.addListener(function(details){
     if(details.reason == "update"){
         alert("Extension Updated:\n"+
               "\nTimer now stops when Facebook tab is minimized."+
-             "\nAdded settings page for customizations.");
+             "\nAdded settings option to enable/disable blocking.");
     }
 });
 
@@ -81,7 +81,7 @@ chrome.windows.onFocusChanged.addListener(function(windowId){
 function dealWithTimer(tab){
     if(onFacebook(tab)){
         if(!timerOn){
-            alert("on facebook and timer was off");
+            //alert("on facebook and timer was off");
             startTimer();
         }else{
             //alert("on FB timer on");
@@ -89,7 +89,7 @@ function dealWithTimer(tab){
     //not on Facebook
     }else{
         if(timerOn){
-            alert("should turn timer off");
+            //alert("should turn timer off");
             stopTimer();
         }
     }
