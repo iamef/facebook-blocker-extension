@@ -31,7 +31,7 @@ function updateSettingsDisplay(){
     chrome.storage.sync.get(enabledKey, function(items){
         var enabled = items[enabledKey];
         if(enabled==undefined){
-            alert("enabled: "+enabled);
+            //alert("enabled: "+enabled);
             enabled=true;
         }
         
