@@ -11,7 +11,7 @@
   },
 
   "background":{
-    "scripts": ["background.js"],
+    "scripts": ["background.js", "onFacebookListener.js"],
     "persistent": false
   },
     
@@ -33,7 +33,7 @@
   "content_scripts": [{
     "matches": ["*://*.facebook.com/*", "*://*.messenger.com/*"],
     "css": ["chatContent.css", "notificationsContent.css"],
-    "js": ["content.js"],
+    "js": ["onFacebook.js"],
     "run_at": "document_end"
   }],
 

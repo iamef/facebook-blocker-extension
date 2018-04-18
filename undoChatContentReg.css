@@ -18,7 +18,7 @@ Hmmm sometimes on first load IDK*/
 
 /*removes sidebar but has the search*/
 .fbChatSidebarBody{
-    display: none;
+    display: inline;
 }
 
 /*_------------------FLYOUT*/
@@ -40,5 +40,5 @@ Hmmm sometimes on first load IDK*/
 /*removes the flyout content*/
 /*id confirmed*/
 #u_0_21{
-    display: none;
+    display: inline;
 }
