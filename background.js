@@ -1,9 +1,9 @@
 //fires when the extension is updated
 chrome.runtime.onInstalled.addListener(function(details){
     if(details.reason == "update"){
-        alert("Extension Updated:\n"+
-              "\nTimer now stops when Facebook tab is minimized."+
-             "\nAdded settings option to enable/disable blocking.");
+//        alert("Extension Updated:\n"+
+//              "\nTimer now stops when Facebook tab is minimized."+
+//             "\nAdded settings option to enable/disable blocking.");
     }
 });
 
@@ -56,8 +56,11 @@ chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab){
 //    if(url.host.indexOf(".facebook.") != -1 || url.host.indexOf(".messenger.") != -1){
 //            alert("on Facebook");
 //    }
-    //console.log(changeInfo);
-    dealWithTimer(tab);
+    console.log("Tab updated: ")
+    console.log(changeInfo);
+    console.log(tab.active);
+    
+    if(tab.active) dealWithTimer(tab);
 });
 
 //checks if we change to a different window which might contain Facebook
@@ -81,15 +84,15 @@ chrome.windows.onFocusChanged.addListener(function(windowId){
 function dealWithTimer(tab){
     if(onFacebook(tab)){
         if(!timerOn){
-            //alert("on facebook and timer was off");
+            alert("on facebook and timer was off");
             startTimer();
         }else{
-            //alert("on FB timer on");
+//            alert("on FB timer on");
         }
     //not on Facebook
     }else{
         if(timerOn){
-            //alert("should turn timer off");
+            alert("should turn timer off");
             stopTimer();
         }
     }
@@ -205,9 +208,6 @@ function startTimer(){
     });
     console.log(accumulatedTime);
     
-    if(accumulatedTime == undefined || isNaN(accumulatedTime)){   
-        accumulatedTime = 0;
-    }
     console.log(accumulatedTime);
     console.log(typeof(accumulatedTime));
     console.log(isNaN(accumulatedTime));
