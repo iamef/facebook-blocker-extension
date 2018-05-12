@@ -77,11 +77,26 @@
             }
             
             #settingsDiv{
-                display: none;
+/*                display: none;*/
             }
             
             .settingsSpan{
                 padding-left: 5px;
+            }
+            
+            #advancedEnablingClickable{
+                text-decoration: underline;
+                color: blue;
+            }
+            
+            #advancedEnablingClickable:hover{
+                text-decoration: underline;
+                color: blue;
+                cursor: pointer;
+            }
+            
+            #advancedEnabling{
+                margin-left: 50px;
             }
             
             
@@ -105,7 +120,20 @@
             
             <div id="settingsDiv">
                 <h1>Settings</h1>
-                <p><label for=""><input type="checkbox" id="enabled"><span class="settingsSpan">Enable Blocking</span></label></p>
+                <p><label for=""><input type="checkbox" id="enabled"><span class="settingsSpan">Enable Blocking (<span id="advancedEnablingClickable">Advanced settings</span>)</span></label></p>
+                
+                <div id="advancedEnabling">
+                    <p><label for=""><input type="checkbox" id="advancedSettingCheckbox"><span class="settingsSpan">Disable Blocking Advanced Settings</span></label></p>
+                    <p>From: <input type="time" name="startTime"> To: <input type="time" name="endTime"></p>
+                    <p>Days of the week: 
+                        <label for=""><input type="checkbox"><span class="settingsSpan">Monday</span></label>,
+                        <label for=""><input type="checkbox"><span class="settingsSpan">Tuesday</span></label>,
+                        <label for=""><input type="checkbox"><span class="settingsSpan">Wednesday</span></label>,
+                        <label for=""><input type="checkbox"><span class="settingsSpan">Thursday</span></label>,
+                        <label for=""><input type="checkbox"><span class="settingsSpan">Friday</span></label>,
+                        <label for=""><input type="checkbox"><span class="settingsSpan">Saturday</span></label>,
+                        <label for=""><input type="checkbox"><span class="settingsSpan">Sunday</span></label></p>
+                </div>
                 
 <!--
                 <h3>General Blocking</h3>
