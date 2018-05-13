@@ -120,3 +120,6 @@ settingsIconElem.onclick = function(){
         document.getElementById("settingsDiv").style.display = 'block';
     }
 }
+
+
+
