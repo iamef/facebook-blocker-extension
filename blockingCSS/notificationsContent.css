@@ -16,3 +16,8 @@ doesn't work
 title{
     content: Fabs;
 }*/
+
+[role="alert"]{
+/*    this sort of random popup on the left that shows up...*/
+    display: none;
+}
