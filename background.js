@@ -1,9 +1,9 @@
 //fires when the extension is updated
 chrome.runtime.onInstalled.addListener(function(details){
     if(details.reason == "update"){
-//        alert("Extension Updated:\n"+
-//              "\nTimer now stops when Facebook tab is minimized."+
-//             "\nAdded settings option to enable/disable blocking.");
+//        alert("Extension Updated: "+
+//              "Dealt with timer bugs \n\n"+
+//              "Timer used to cease tracking after clicking some links on Facebook, sometimes resets to zero when it should not.");
     }
 });
 
