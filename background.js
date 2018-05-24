@@ -1,9 +1,8 @@
 //fires when the extension is updated
 chrome.runtime.onInstalled.addListener(function(details){
     if(details.reason == "update"){
-//        alert("Extension Updated: "+
-//              "Dealt with timer bugs \n\n"+
-//              "Timer used to cease tracking after clicking some links on Facebook, sometimes resets to zero when it should not.");
+        alert("Extension Updated: "+
+              "Now hides newsfeed when blocking is enabled.");
     }
 });
 
@@ -84,7 +83,7 @@ chrome.windows.onFocusChanged.addListener(function(windowId){
 function dealWithTimer(tab){
     if(onFacebook(tab)){
         if(!timerOn){
-            alert("on facebook and timer was off");
+//            alert("on facebook and timer was off");
             startTimer();
         }else{
 //            alert("on FB timer on");
@@ -92,7 +91,7 @@ function dealWithTimer(tab){
     //not on Facebook
     }else{
         if(timerOn){
-            alert("should turn timer off");
+//            alert("should turn timer off");
             stopTimer();
         }
     }

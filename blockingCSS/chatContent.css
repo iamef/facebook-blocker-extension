@@ -24,11 +24,9 @@ Hmmm sometimes on first load IDK*/
 /*_------------------FLYOUT*/
 /*removes the flyout completely but does not take out the messaging to me*/
 /*id confirmed*/
-/*
 #BuddylistPagelet{
     display: none;
 }
-*/
 
 /*contains the 1-on-1 chat that opens when someone messages you
 #ChatTabsPagelet
@@ -38,7 +36,14 @@ Hmmm sometimes on first load IDK*/
 #pagelet_dock*/
 
 /*removes the flyout content*/
-/*id confirmed*/
-#u_0_21{
+/*appears to work*/
+/* [data-testid="chat_sidebar"]{
     display: none;
-}
+} */
+
+/*OBSOLETE*/
+/*removes the flyout content*/
+/*id obsolete*/
+/* #u_0_21{
+    display: none;
+} */

@@ -17,6 +17,7 @@ function runEnabled(enabled){
         //need to make sure that notifications are on and chat is on
         chrome.tabs.insertCSS(null, {file: "blockingCSS/undoChatContentReg.css"});
         chrome.tabs.insertCSS(null, {file: "blockingCSS/undoNotificationsContent.css"});
+        chrome.tabs.insertCSS(null, {file: "blockingCSS/undoNewsfeedContent.css"});
     }
 }
 

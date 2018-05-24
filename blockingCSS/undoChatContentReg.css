@@ -24,11 +24,10 @@ Hmmm sometimes on first load IDK*/
 /*_------------------FLYOUT*/
 /*removes the flyout completely but does not take out the messaging to me*/
 /*id confirmed*/
-/*
+/*block and inline do the same thing*/
 #BuddylistPagelet{
-    display: none;
+    display: block;
 }
-*/
 
 /*contains the 1-on-1 chat that opens when someone messages you
 #ChatTabsPagelet
@@ -38,7 +37,8 @@ Hmmm sometimes on first load IDK*/
 #pagelet_dock*/
 
 /*removes the flyout content*/
-/*id confirmed*/
+/*id obsolete*/
+/*
 #u_0_21{
     display: inline;
-}
+}*/

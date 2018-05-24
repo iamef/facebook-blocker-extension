@@ -1,0 +1,4 @@
+[id*="feed_stream"]{
+/*    display block and inline do the same thing*/
+    display: block;
+}
