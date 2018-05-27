@@ -77,7 +77,7 @@
             }
             
             #settingsDiv{
-                display: none;
+/*                display: none;*/
             }
             
             .settingsSpan{
@@ -121,6 +121,7 @@
             
             <div id="settingsDiv">
                 <h1>Settings</h1>
+                <h2>Enable/Disable</h2>
                 <p><label for=""><input type="checkbox" id="enabled"><span class="settingsSpan">Enable Blocking <!--(<span id="advancedEnablingClickable">Advanced settings</span>)--></span></label></p>
                 
 <!--         ADVANCED ENABLING 
@@ -138,15 +139,18 @@
                 </div>
 -->
                 
-<!--       OTHER BLOcKING STUFF
+<!--       OTHER BLOcKING STUFF-->
+                <h2>Blocking Settings (active only when blocking is enabled)</h2>
+                
                 <h3>General Blocking</h3>
-                <p><label for=""><input type="checkbox"><span class="settingsSpan">Block notifications on the top bar (globe and messaging icon)</span></label></p>
-                <p><label for=""><input type="checkbox"><span class="settingsSpan">Block chat</span></label></p>
-                <p>&nbsp;&nbsp;&nbsp;&nbsp;<label for=""><input type="checkbox"></label><span class="settingsSpan">Block chat entirely (Chat will not show when other people message you)</span></p>
+                <p><label for=""><input type="checkbox" id="notifsTopBar"><span class="settingsSpan">Block notifications on the top bar (globe and messaging icon)</span></label></p>
+                <p><label for=""><input type="checkbox" id="blockChat"><span class="settingsSpan">Block chat</span></label></p>
+                <!-- <p>&nbsp;&nbsp;&nbsp;&nbsp;<label for=""><input type="checkbox"></label><span class="settingsSpan">Block chat entirely (Chat will not show when other people message you)</span></p> -->
                 
                 <h3>Home Page</h3>
-                <p><label for=""><input type="checkbox"><span class="settingsSpan">News feed</span></label></p>
+                <p><label for=""><input type="checkbox" id="newsfeed"><span class="settingsSpan">Block news feed</span></label></p>
                 
+<!--
                 <h3>Messaging Page</h3>
                 <p><label for=""><input type="checkbox"><span class="settingsSpan">Redirect to messenger.com rather than facebook.com/messages</span></label></p>
                 <p><label for=""><input type="checkbox"><span class="settingsSpan">Block recent messages</span></label></p>

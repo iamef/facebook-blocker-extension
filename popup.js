@@ -25,30 +25,68 @@ function updateTimeString(){
     });
 }
 
-var enabledKey='enabled'
-
+var enabledKey='enabled';
+var notifsTopBarBlockedKey='notifsTopBarBlocked';
+var chatBlockedKey='chatBlocked';
+var newsfeedBlockedKey='feedBlocked';
 function updateSettingsDisplay(){
     chrome.storage.sync.get(enabledKey, function(items){
+        //enabled section
         var enabled = items[enabledKey];
         if(enabled==undefined){
             //alert("enabled: "+enabled);
             enabled=true;
         }
-        
         document.getElementById("enabled").checked=enabled;
         
+        //notifications top bar
+        //console.log("notifs saved state: " + items[notifsTopBarBlockedKey]);
+        var notifsBlocked = items[notifsTopBarBlockedKey];
+        if(notifsBlocked==undefined){
+            notifsBlocked=true;
+        }
+        document.getElementById('notifsTopBar').checked=notifsBlocked;
+        
+        //chat
+        var chatBlocked = items[chatBlockedKey];
+        if(chatBlocked==undefined){
+            chatBlocked=true;
+        }
+        document.getElementById("blockChat").checked=chatBlocked;
+        
+        //newsfeed
+        var newsBlocked = items[newsfeedBlockedKey];
+        if(newsBlocked==undefined){
+            newsBlocked=true;
+        }
+        document.getElementById("newsfeed").checked=newsBlocked;
+    
     });
 }
 
 function saveSettings(){
     //Enabled settings
-        
     var enabled = document.getElementById('enabled').checked;
     var items = {};
     items[enabledKey] = enabled;
     
+    
+    //notifications top bar
+    var notifsBlocked = document.getElementById('notifsTopBar').checked;
+    items[notifsTopBarBlockedKey] = notifsBlocked;
+    console.log("notifications blocked " + notifsBlocked)
+    
+    //chat
+    var chatBlocked = document.getElementById('blockChat').checked;
+    items[chatBlockedKey] = chatBlocked;
+    
+    //newsfeed
+    var newsBlocked = document.getElementById('newsfeed').checked;
+    items[newsfeedBlockedKey] = newsBlocked;
+    //EDIIITTTT FRRROOOMMM HEERREEE .   items[chatBlockedKey] = chatBlocked;
+    
     chrome.storage.sync.set(items, function() {
-          alert("Enabled settings submitted, enabled = " + enabled);
+          alert("Settings saved.");
     });
 }
 
