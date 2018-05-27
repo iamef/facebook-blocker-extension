@@ -2,7 +2,7 @@
 chrome.runtime.onInstalled.addListener(function(details){
     if(details.reason == "update"){
         alert("Extension Updated: "+
-              "Now hides newsfeed when blocking is enabled.");
+              "Added settings to custmoize what to hide.");
     }
 });
 
@@ -55,9 +55,9 @@ chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab){
 //    if(url.host.indexOf(".facebook.") != -1 || url.host.indexOf(".messenger.") != -1){
 //            alert("on Facebook");
 //    }
-    console.log("Tab updated: ")
-    console.log(changeInfo);
-    console.log(tab.active);
+//    console.log("Tab updated: ")
+//    console.log(changeInfo);
+//    console.log(tab.active);
     
     if(tab.active) dealWithTimer(tab);
 });
@@ -72,7 +72,7 @@ chrome.windows.onFocusChanged.addListener(function(windowId){
     chrome.tabs.query({active: true}, function(tabs){
         
         tabs.forEach(function(tab){
-            console.log("tabWId: " + tab.windowId + ", WID: "+windowId +", url " +tab.url);
+            //console.log("tabWId: " + tab.windowId + ", WID: "+windowId +", url " +tab.url);
             if(tab.windowId == windowId){
                 dealWithTimer(tab);
             }
@@ -205,11 +205,9 @@ function startTimer(){
         
         return (chrome.runtime.lastError ? 0 : items[accumulatedTimeKey]);*/
     });
-    console.log(accumulatedTime);
     
     console.log(accumulatedTime);
-    console.log(typeof(accumulatedTime));
-    console.log(isNaN(accumulatedTime));
+    
     
     setIntervalTimer = setInterval(updateTime, 1000);
     timerOn=true;

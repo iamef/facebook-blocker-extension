@@ -3,7 +3,7 @@
 
   "name": "Selective Facebook Blocker",
   "description": "Allows the user to have a more focused Facebook experience.",
-  "version": "0.0.0.6",
+  "version": "0.0.0.7",
   "icons": {
     "16": "icons/icon16.png",
     "48": "icons/icon48.png",
