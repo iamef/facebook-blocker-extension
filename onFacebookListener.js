@@ -31,6 +31,7 @@ chrome.runtime.onMessage.addListener(function(message, sender, sendResponse){
 
         sendResponse({received: true});
     }
+    
 });
 
 function define(inItems){
@@ -38,7 +39,7 @@ function define(inItems){
     return inItems;
 }
 
-
+/*---------UNBLOCKING------*/
 function unblockAll(){
     unblockChat();
     unblockNotifsTopBar();
@@ -58,7 +59,25 @@ function unblockFeed(){
     chrome.tabs.insertCSS(null, {file: "blockingCSS/undoNewsfeedContent.css"});
 }
 
-
+/*---------BLOCKING------*/
 //Blocking settings
 //blocked items
 //chat sidebar (search isn't blocked): 
+function blockAll(){
+    blockChat();
+    blockNotifsTopBar();
+    blockFeed();
+}
+
+function blockChat(){
+    chrome.tabs.insertCSS(null, {file: "blockingCSS/chatContent.css"});
+}
+
+function blockNotifsTopBar(){
+    chrome.tabs.insertCSS(null, {file: "blockingCSS/notificationsContent.css"});
+
+}
+
+function blockFeed(){
+    chrome.tabs.insertCSS(null, {file: "blockingCSS/newsfeedContent.css"});
+}

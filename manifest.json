@@ -11,7 +11,7 @@
   },
 
   "background":{
-    "scripts": ["background.js", "onFacebookListener.js"],
+    "scripts": ["background.js", "contextMenuBackground.js", "onFacebookListener.js"],
     "persistent": false
   },
     
@@ -39,6 +39,7 @@
     "activeTab",
     "storage",
     "declarativeContent",
+    "contextMenus",
     "*://*.facebook.com/*",
     "*://*.facebook.com/", 
     "*://*.messenger.com/*"
