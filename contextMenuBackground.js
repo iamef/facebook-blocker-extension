@@ -3,6 +3,7 @@ chrome.runtime.onInstalled.addListener(createMenu);
 
 function createMenu(){
     createEnableAndDisableItem();
+    createChatItem();
 }
  
 var enableParentId;
@@ -16,7 +17,6 @@ function createEnableAndDisableItem(){
         contexts: ["page"], 
         documentUrlPatterns: ["*://*.facebook.com/*"]});
     
-    console.log(enableParentId);
     
     //create enable child for the enable/disable
     enableBlockingId = chrome.contextMenus.create({type: 'normal', 
@@ -35,6 +35,35 @@ function createEnableAndDisableItem(){
         documentUrlPatterns: ["*://*.facebook.com/*"]});
 }
 
+var chatParentId;
+var blockChatId;
+var showChatId;
+function createChatItem(){
+    //create parent for the chat
+    chatParentId=chrome.contextMenus.create({type: 'normal', 
+        id: "chatParent", 
+        title: "Chat Blocking", 
+        contexts: ["page"], 
+        documentUrlPatterns: ["*://*.facebook.com/*"]});
+    
+    
+    //create block chat child for the chat
+    blockChatId = chrome.contextMenus.create({type: 'normal', 
+        id: "blockChat", 
+        title: "Block Chat", 
+        contexts: ["page"], 
+        parentId: chatParentId,
+        documentUrlPatterns: ["*://*.facebook.com/*"]});
+    
+    //create show chat child for the chat
+    showChatId = chrome.contextMenus.create({type: 'normal', 
+        id: "showChat", 
+        title: "Show Chat", 
+        contexts: ["page"], 
+        parentId: chatParentId,
+        documentUrlPatterns: ["*://*.facebook.com/*"]});
+}
+
 //add onClicked listener
 chrome.contextMenus.onClicked.addListener(menuClickedHandler);
 
@@ -43,7 +72,10 @@ function menuClickedHandler(info, tabs){
     if(info.menuItemId == enableBlockingId){
         blockAll();
     }else if(info.menuItemId == disableBlockingId){
-        
         unblockAll();
+    }else if(info.menuItemId == blockChatId){
+        blockChat();
+    }else if(info.menuItemId == showChatId){
+        unblockChat();
     }
 }
