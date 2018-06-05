@@ -1,8 +1,10 @@
 //fires when the extension is updated
 chrome.runtime.onInstalled.addListener(function(details){
     if(details.reason == "update"){
-        alert("Extension Updated: "+
-              "Added settings to custmoize what to hide.");
+        alert("Extension Updated: \n"+
+              '-Renamed the extension from "Selective Facebook Blocker" to "FBlocker and Timer."\n'+
+              "-Added settings to customize what to hide.\n"+ 
+              "-Added a right click function on Facebook to conveniently customize Facebook blocking.");
     }
 });
 
@@ -103,7 +105,7 @@ function onFacebook(tab){
     //it must be a FB url
     
     
-    if(tab == -1 || !tab.active){
+    if(tab == -1 || tab == undefined || !tab.active){
         //alert("the tab is not active");
         return false;
     }

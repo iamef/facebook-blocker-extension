@@ -4,6 +4,8 @@ chrome.runtime.onInstalled.addListener(createMenu);
 function createMenu(){
     createEnableAndDisableItem();
     createChatItem();
+    createNotifsItem();
+    createFeedItem();
 }
  
 var enableParentId;
@@ -64,6 +66,68 @@ function createChatItem(){
         documentUrlPatterns: ["*://*.facebook.com/*"]});
 }
 
+
+var notifsParentId;
+var blockNotifsId;
+var showNotifsId;
+function createNotifsItem(){
+    //create parent for the notifications
+    notifsParentId=chrome.contextMenus.create({type: 'normal', 
+        id: "notifsParent", 
+        title: "Notifications Blocking", 
+        contexts: ["page"], 
+        documentUrlPatterns: ["*://*.facebook.com/*"]});
+    
+    
+    //create block notifications child
+    blockNotifsId = chrome.contextMenus.create({type: 'normal', 
+        id: "blockNotifs", 
+        title: "Block Notifications", 
+        contexts: ["page"], 
+        parentId: notifsParentId,
+        documentUrlPatterns: ["*://*.facebook.com/*"]});
+    
+    //create show notifications child
+    showNotifsId = chrome.contextMenus.create({type: 'normal', 
+        id: "showNotifs", 
+        title: "Show Notifications", 
+        contexts: ["page"], 
+        parentId: notifsParentId,
+        documentUrlPatterns: ["*://*.facebook.com/*"]});
+}
+
+
+var feedParentId;
+var blockFeedId;
+var showFeedId;
+function createFeedItem(){
+    //create parent for the feed
+    feedParentId=chrome.contextMenus.create({type: 'normal', 
+        id: "feedParent", 
+        title: "Feed Blocking", 
+        contexts: ["page"], 
+        documentUrlPatterns: ["*://*.facebook.com/*"]});
+    
+    
+    //create block feed child
+    blockFeedId = chrome.contextMenus.create({type: 'normal', 
+        id: "blockFeed", 
+        title: "Block Feed", 
+        contexts: ["page"], 
+        parentId: feedParentId,
+        documentUrlPatterns: ["*://*.facebook.com/*"]});
+    
+    //create show feed child
+    showFeedId = chrome.contextMenus.create({type: 'normal', 
+        id: "showFeed", 
+        title: "Show Feed", 
+        contexts: ["page"], 
+        parentId: feedParentId,
+        documentUrlPatterns: ["*://*.facebook.com/*"]});
+}
+
+
+
 //add onClicked listener
 chrome.contextMenus.onClicked.addListener(menuClickedHandler);
 
@@ -77,5 +141,13 @@ function menuClickedHandler(info, tabs){
         blockChat();
     }else if(info.menuItemId == showChatId){
         unblockChat();
+    }else if(info.menuItemId == blockNotifsId){
+        blockNotifsTopBar();
+    }else if(info.menuItemId == showNotifsId){
+        unblockNotifsTopBar();
+    }else if(info.menuItemId == blockFeedId){
+        blockFeed();
+    }else if(info.menuItemId == showFeedId){
+        unblockFeed();
     }
 }

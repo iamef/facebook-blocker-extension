@@ -1,8 +1,8 @@
 {
   "manifest_version": 2,
 
-  "name": "Selective Facebook Blocker",
-  "description": "Allows the user to have a more focused Facebook experience.",
+  "name": "FBlocker and Timer",
+  "description": "Transform your distracted time on Facebook into focused time.",
   "version": "0.0.0.7",
   "icons": {
     "16": "icons/icon16.png",
