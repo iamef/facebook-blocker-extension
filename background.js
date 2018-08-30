@@ -1,10 +1,10 @@
 //fires when the extension is updated
 chrome.runtime.onInstalled.addListener(function(details){
     if(details.reason == "update"){
-        alert("Extension Updated: \n"+
-              '-Renamed the extension from "Selective Facebook Blocker" to "FBlocker and Timer."\n'+
-              "-Added settings to customize what to hide.\n"+ 
-              "-Added a right click function on Facebook to conveniently customize Facebook blocking.");
+        alert("Extension Updated: \n\n"+
+              '-Renamed the extension from "FBlocker and Timer" to "Selective Blocker and Timer for Facebook™" \n'+
+              "-Rebranded the logo\n"+ 
+              "to avoid legal issues with Facebook.");
     }
 });
 
@@ -224,6 +224,7 @@ function stopTimer(){
 function storeAccumulatedTime(){
     var items = {};
     if(accumulatedTime == undefined || isNaN(accumulatedTime)){   
+//        alert("accumulated time:" + accumulatedTime);
         accumulatedTime = 0;
     }
     items[accumulatedTimeKey] = accumulatedTime;
@@ -243,6 +244,7 @@ function storeAccumulatedTime(){
 
 function updateTime(){
     if(accumulatedTime == undefined || isNaN(accumulatedTime)){   
+//        alert("accumulated time:" + accumulatedTime);
         accumulatedTime = 0;
     }
     accumulatedTime+=1;
