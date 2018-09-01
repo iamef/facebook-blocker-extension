@@ -18,8 +18,8 @@
 
   "browser_action":{
     "default_icon": {
-      "16": "icons/fblocker_logo_16_noTrans.png",
-      "48": "icons/fblocker_logo_48_noTrans.png",
+      "16": "icons/fblocker_logo_16.png",
+      "48": "icons/fblocker_logo_48.png",
       "128": "icons/fblocker_logo_128.png"
     }, 
     "default_title": "Selective Facebook blocker"
