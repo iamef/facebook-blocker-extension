@@ -1,3 +1,5 @@
+console.log("Background.js");
+
 //fires when the extension is updated
 chrome.runtime.onInstalled.addListener(function(details){
     if(details.reason == "update"){

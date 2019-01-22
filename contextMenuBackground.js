@@ -1,3 +1,5 @@
+console.log("contextMenuBackground.js");
+
 //set up menu at install time
 chrome.runtime.onInstalled.addListener(createMenu);
 

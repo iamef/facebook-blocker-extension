@@ -6,8 +6,8 @@
   "version": "0.0.0.8",
   "icons": {
     "16": "icons/fblocker_logo_16.png",
-    "48": "icons/fblocker_logo_48.png",
-    "128": "icons/fblocker_logo_128.png"
+    "48": "icons/fblocker_logo_48_thic.png",
+    "128": "icons/fblocker_logo_128_thic.png"
   },
 
   "background":{
@@ -19,10 +19,10 @@
   "browser_action":{
     "default_icon": {
       "16": "icons/fblocker_logo_16.png",
-      "48": "icons/fblocker_logo_48.png",
-      "128": "icons/fblocker_logo_128.png"
+      "48": "icons/fblocker_logo_48_thic.png",
+      "128": "icons/fblocker_logo_128_thic.png"
     }, 
-    "default_title": "Selective Facebook blocker"
+    "default_title": "Selective Blocker and Timer for Facebook™"
   },
 
   

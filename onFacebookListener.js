@@ -1,3 +1,5 @@
+console.log("onFacebookListener.js");
+
 var enabledKey='enabled';
 var notifsTopBarBlockedKey='notifsTopBarBlocked';
 var chatBlockedKey='chatBlocked';
@@ -47,15 +49,18 @@ function unblockAll(){
 }
 
 function unblockChat(){
+    console.log("unBlockChat() called");
     chrome.tabs.insertCSS(null, {file: "blockingCSS/undoChatContentReg.css"});
 }
 
 function unblockNotifsTopBar(){
+    console.log("unblockNotifsTopBar() called");
     chrome.tabs.insertCSS(null, {file: "blockingCSS/undoNotificationsContent.css"});
 
 }
 
 function unblockFeed(){
+    console.log("unblockFeed() called");
     chrome.tabs.insertCSS(null, {file: "blockingCSS/undoNewsfeedContent.css"});
 }
 
