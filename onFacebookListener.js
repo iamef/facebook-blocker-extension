@@ -1,9 +1,16 @@
-console.log("onFacebookListener.js");
+console.log("onFacebookListener.js"); //this is called right when the extension is installed
+
+
+/**The purpose of this script is to ensure Facebook is properly configured based on the settings of the user*/
+
+/**The listener does not listen for context menu information */
 
 var enabledKey='enabled';
 var notifsTopBarBlockedKey='notifsTopBarBlocked';
 var chatBlockedKey='chatBlocked';
 var newsfeedBlockedKey='feedBlocked';
+
+//the message comes from the context script onFacebook.js
 chrome.runtime.onMessage.addListener(function(message, sender, sendResponse){
     if(message.onFacebook){
         //alert("message: " + message.onFacebook);
@@ -37,6 +44,7 @@ chrome.runtime.onMessage.addListener(function(message, sender, sendResponse){
 });
 
 function define(inItems){
+    if(inItems==undefined) alert("items[chatBlockedKey or notifsTopBarBlockedKey or newsfeedBlockedKey is undefined]");
     if(inItems==undefined) return true;
     return inItems;
 }

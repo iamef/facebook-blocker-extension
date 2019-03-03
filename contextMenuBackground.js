@@ -1,4 +1,4 @@
-console.log("contextMenuBackground.js");
+console.log("contextMenuBackground.js"); //this is called right when the extension is installed
 
 //set up menu at install time
 chrome.runtime.onInstalled.addListener(createMenu);

@@ -1,14 +1,22 @@
-console.log("Background.js");
+console.log("background.js"); //this is called right when the extension is installed
+
+/** The purpose of this script is to run basic background processes:
+
+1) ensure user knows when the extension is updated
+2) ensure that the popup.html shows up
+3) takes care of the timer functions
+
+
 
 //fires when the extension is updated
-chrome.runtime.onInstalled.addListener(function(details){
+/*chrome.runtime.onInstalled.addListener(function(details){
     if(details.reason == "update"){
         alert("Extension Updated: \n\n"+
               '-Renamed the extension from "FBlocker and Timer" to "Selective Blocker and Timer for Facebook™" \n'+
               "-Rebranded the logo\n"+ 
               "to avoid legal issues with Facebook.");
     }
-});
+});*/
 
 //fires when the extension is clicked
 chrome.browserAction.onClicked.addListener(function(activeTab)
@@ -25,27 +33,14 @@ chrome.browserAction.onClicked.addListener(function(activeTab)
     
 });
 
-//gets the active tab
-chrome.tabs.query({active: true, currentWindow: true}, function(tabs){
-    //alert(tabs[0]);
-});
 
 var setIntervalTimer; //set this variable to the setIntervalTimer so I could clear it later
-var timerOn = false; //USAR
+
+var timerOn = false;
 
 //checks if the tab is changed
 chrome.tabs.onActivated.addListener(function(info){
     chrome.tabs.get(info.tabId, function (tab){
-        //console.log("Hello");
-        
-//        url = new URL(tab.url);
-//        
-//        //alert(url.host.indexOf(".facebook."));
-//        
-//        if(url.host.indexOf(".facebook.") != -1 || url.host.indexOf(".messenger.") != -1){
-//            alert("on Facebook");
-//            setIntervalTimer = setInterval(updateTime, 1000);
-//        }
         dealWithTimer(tab);
         
     });
@@ -53,16 +48,7 @@ chrome.tabs.onActivated.addListener(function(info){
 });
 
 //checks if tab updates to contain Facebook
-chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab){
-    //url = new URL(tab.url);
-    
-//    if(url.host.indexOf(".facebook.") != -1 || url.host.indexOf(".messenger.") != -1){
-//            alert("on Facebook");
-//    }
-//    console.log("Tab updated: ")
-//    console.log(changeInfo);
-//    console.log(tab.active);
-    
+chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab){   
     if(tab.active) dealWithTimer(tab);
 });
 
@@ -126,72 +112,6 @@ function onFacebook(tab){
     return (url.host.indexOf(".facebook.") != -1 || url.host.indexOf(".messenger.") != -1);
 }
 
-
-/*chrome.tabs.onRemoved.addListener(function(tabid, removed) {
-    alert("tab Removed");
-    //console.log("tab Closed");
-    //chrome.tabs.sendMessage(tabId, any message, object options, function responseCallback)
-
-    chrome.runtime.sendMessage({tabClosed: true}, function(response){
-           console.log(response);
-    });
-    
-});*/
-    
-   /*chrome.runtime.sendMessage(extensionID, {fromPopup: true}, function(response){
-           console.log(response); 
-        });
- 
-/*chrome.runtime.onMessage.addListener(
-  function(request, sender, sendResponse) {
-    console.log(request);
-    console.log(sender);
-    sendResponse({received: "onFacebook"});
-    //alert("Are you sure you want to be on Facebook right now?");
-  });
-
-/*chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
-    //alert("received");
-    console.log(request);
-    console.log(sender);
-    sendResponse({received: "on facebook"});
-    
-    //alert("arrived");
-    
-    /*chrome.tabs.executeScript(null, {"file": "removeChat.js"});
-    chrome.tabs.executeScript(null, {"file": "removeTitleNotifications.js"});*//*
-    chrome.tabs.update({url: "popup.html"});
-});*/
-
-
-
-//on Updated updates too late
-/*chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab){
-  
-  
-  var url = (new URL(tab.url)).hostname;
-  console.log(url);
-  if(url.includes(".facebook.")){
-    chrome.tabs.executeScript(null, {"file": "removeChat.js"});
-    chrome.tabs.executeScript(null, {"file": "removeTitleNotifications.js"});
-    
-    console.log(tab.mutedInfo.muted);
-    if(!tab.mutedInfo.muted)
-      chrome.tabs.update(tab.id, {muted: true});
-      console.log("Tab muted");
-  }
-});*/
-
-/*chrome.browserAction.onClicked.addListener(function(tab) {
-  console.log("clicked");
-  console.log(tab);
-  //why is the first element null?
-  chrome.tabs.executeScript(null, {"file": "removeChat.js"});
-});*/
-
-
-///////////////////////////////////TIMER STUFFF////////
-
 ////////////TIMER STUFF//////////
 
 //var displayTime;
@@ -199,6 +119,8 @@ function onFacebook(tab){
 var accumulatedTime;
 var accumulatedTimeKey='accTimeMS'
 
+var startTime;
+var endTime;
 
 function startTimer(){
     chrome.storage.sync.get(accumulatedTimeKey, function(items){
@@ -207,17 +129,22 @@ function startTimer(){
         /*console.log(chrome.runtime.lastError);
         console.log(items[accumulatedTimeKey]);
         
+        I don't think you can return stuff sin it runs async or something
         return (chrome.runtime.lastError ? 0 : items[accumulatedTimeKey]);*/
     });
     
-    console.log(accumulatedTime);
+    console.log("accTime: "+accumulatedTime);
     
+    //setIntervalTimer = setInterval(updateTime, 1000);
+    //setIntervalTimer = setInterval(updateTime, 60000);
+    startTime=Date.now();
     
-    setIntervalTimer = setInterval(updateTime, 1000);
     timerOn=true;
 }
 
 function stopTimer(){
+    endTime=Date.now();
+    
     storeAccumulatedTime();
     clearTimeout(setIntervalTimer);
     timerOn=false;
@@ -225,8 +152,34 @@ function stopTimer(){
 
 function storeAccumulatedTime(){
     var items = {};
+    
     if(accumulatedTime == undefined || isNaN(accumulatedTime)){   
-//        alert("accumulated time:" + accumulatedTime);
+        alert("accumulated time:" + accumulatedTime);
+        accumulatedTime = 0;
+    }
+    
+    console.log((endTime-startTime)/1000);
+    
+    accumulatedTime+=(endTime-startTime)/1000;
+    
+    items[accumulatedTimeKey] = accumulatedTime;
+    
+    console.log(items);
+    
+    chrome.storage.sync.set(items, function(){
+        console.log("saved time: " + accumulatedTime);
+        //console.log(typeof(accumulatedTime));
+        //console.log(isNaN(accumulatedTime));
+        
+    });
+}
+
+//OBSOLETE VERSION
+/*function storeAccumulatedTime(){
+    var items = {};
+    
+    if(accumulatedTime == undefined || isNaN(accumulatedTime)){   
+        alert("accumulated time:" + accumulatedTime);
         accumulatedTime = 0;
     }
     items[accumulatedTimeKey] = accumulatedTime;
@@ -234,43 +187,21 @@ function storeAccumulatedTime(){
     console.log(items);
     
     chrome.storage.sync.set(items, function(){
-        console.log("saved " + accumulatedTime);
-        //console.log(accumulatedTime);
-        console.log(typeof(accumulatedTime));
-        console.log(isNaN(accumulatedTime));
+        console.log("saved time: " + accumulatedTime);
+        //console.log(typeof(accumulatedTime));
+        //console.log(isNaN(accumulatedTime));
         
     });
-}
+}*/
 
 
 
 function updateTime(){
     if(accumulatedTime == undefined || isNaN(accumulatedTime)){   
-//        alert("accumulated time:" + accumulatedTime);
+        alert("accumulated time:" + accumulatedTime);
         accumulatedTime = 0;
     }
     accumulatedTime+=1;
     //storeAccumulatedTime();
     
 }
-    
-//moved to popup.js
-//function timeString(){
-//    var secondsPassed = accumulatedTime;
-//    //console.log(startTime)
-//    //console.log(accumulatedTime);
-//    //console.log(secondsPassed);
-//    
-//    var minutes = Math.floor(secondsPassed / 60);
-//    var seconds = Math.floor(secondsPassed % 60);
-//    
-//    var displayString = "";
-//    
-//    if(seconds < 10)
-//        displayString= minutes + ":0" + seconds;
-//    else
-//        displayString= minutes + ":" + seconds;
-//    //alert(displayString);
-//    return displayString;
-//}
-//
