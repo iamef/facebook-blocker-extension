@@ -137,7 +137,7 @@ function startTimer(){
     console.log("accTime: "+accumulatedTime);
     
     //setIntervalTimer = setInterval(updateTime, 1000);
-    //setIntervalTimer = setInterval(updateTime, 60000);
+    //setIntervalTimer = setInterval(updateTimeDisplay, 5000);
     startTime=Date.now();
     
     timerOn=true;
@@ -199,12 +199,26 @@ function storeAccumulatedTime(){
 
 
 
-function updateTime(){
+function updateTimeDisplay(){
+    var displayNumber=0;
     if(accumulatedTime == undefined || isNaN(accumulatedTime)){   
         alert("accumulated time:" + accumulatedTime);
-        accumulatedTime = 0;
+        displayNumber = 0;
+    }else{
+        displayNumber=accumulatedTime;
     }
-    accumulatedTime+=1;
-    //storeAccumulatedTime();
+    
+//    console.log(displayNumber);
+    displayNumber+=(Date.now()-startTime)/1000;
+    
+    
+    console.log(displayNumber);
+    
+    var timeDisplayElem = document.getElementById("asdfFacebookTimerfdas");
+    
+    console.log(document);
+    console.log(timeDisplayElem);
+    
+    //timeDisplayElem.innerHTML = Math.round(displayNumber / 60);
     
 }
