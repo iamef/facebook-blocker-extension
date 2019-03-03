@@ -123,6 +123,7 @@ var startTime;
 var endTime;
 
 function startTimer(){
+    console.log("\nStart Timer");
     chrome.storage.sync.get(accumulatedTimeKey, function(items){
         console.log(items[accumulatedTimeKey]);
         accumulatedTime = items[accumulatedTimeKey];
@@ -143,11 +144,13 @@ function startTimer(){
 }
 
 function stopTimer(){
+    console.log("\nStop Timer");
     endTime=Date.now();
     
     storeAccumulatedTime();
     clearTimeout(setIntervalTimer);
     timerOn=false;
+    
 }
 
 function storeAccumulatedTime(){
@@ -174,7 +177,7 @@ function storeAccumulatedTime(){
     });
 }
 
-//OBSOLETE VERSION
+//OBSOLETE VERSION MAY NEED THIS FOR REFERENCE
 /*function storeAccumulatedTime(){
     var items = {};
     
