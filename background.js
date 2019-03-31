@@ -14,7 +14,8 @@ console.log("background.js"); //this is called right when the extension is insta
         alert("Extension Updated: \n\n"+
               '-Renamed the extension from "FBlocker and Timer" to "Selective Blocker and Timer for Facebook™" \n'+
               "-Rebranded the logo\n"+ 
-              "to avoid legal issues with Facebook.");
+              "to avoid legal issues with Facebook."+
+              "\nEmail csandapp@gmail.com or leave a review at tinyurl.com/fbblocker if you have any concerns or feedback. Thank you!");
     }
 });*/
 
@@ -33,6 +34,7 @@ chrome.browserAction.onClicked.addListener(function(activeTab)
     
 });
 
+//var accTimeUndefined = true;
 
 var setIntervalTimer; //set this variable to the setIntervalTimer so I could clear it later
 
@@ -124,18 +126,8 @@ var endTime;
 
 function startTimer(){
     console.log("\nStart Timer");
-    chrome.storage.sync.get(accumulatedTimeKey, function(items){
-        console.log(items[accumulatedTimeKey]);
-        accumulatedTime = items[accumulatedTimeKey];
-        /*console.log(chrome.runtime.lastError);
-        console.log(items[accumulatedTimeKey]);
-        
-        I don't think you can return stuff sin it runs async or something
-        return (chrome.runtime.lastError ? 0 : items[accumulatedTimeKey]);*/
-    });
     
-    console.log("accTime: "+accumulatedTime);
-    
+    //getAccumulatedTime();
     //setIntervalTimer = setInterval(updateTime, 1000);
     //setIntervalTimer = setInterval(updateTimeDisplay, 5000);
     startTime=Date.now();
@@ -148,34 +140,79 @@ function stopTimer(){
     endTime=Date.now();
     
     storeAccumulatedTime();
-    clearTimeout(setIntervalTimer);
+    //clearTimeout(setIntervalTimer);
     timerOn=false;
     
 }
 
+//OBSOLETE: BECAUSE THE GET FUNCTION IS ASYNCHRONOUS, I PREFER TO HAVE THINGS WITHIN IT
+//function getAccumulatedTime(){
+//    chrome.storage.sync.get(accumulatedTimeKey, function(items){
+//        console.log(items[accumulatedTimeKey]);
+//        accumulatedTime = items[accumulatedTimeKey];
+//        /*console.log(chrome.runtime.lastError);
+//        console.log(items[accumulatedTimeKey]);
+//        
+//        I don't think you can return stuff sin it runs async or something
+//        return (chrome.runtime.lastError ? 0 : items[accumulatedTimeKey]);*/
+//    });
+//    
+//    console.log("accTime: "+accumulatedTime);
+//}
+
 function storeAccumulatedTime(){
-    var items = {};
+    chrome.storage.sync.get(accumulatedTimeKey, function(items){
+        console.log(items[accumulatedTimeKey]);
+        accumulatedTime = items[accumulatedTimeKey];
+        
+        console.log("Time spent: " + (endTime-startTime)/1000);
     
-    if(accumulatedTime == undefined || isNaN(accumulatedTime)){   
-        alert("accumulated time:" + accumulatedTime);
-        accumulatedTime = 0;
-    }
-    
-    console.log((endTime-startTime)/1000);
-    
-    accumulatedTime+=(endTime-startTime)/1000;
-    
-    items[accumulatedTimeKey] = accumulatedTime;
-    
-    console.log(items);
-    
-    chrome.storage.sync.set(items, function(){
-        console.log("saved time: " + accumulatedTime);
-        //console.log(typeof(accumulatedTime));
-        //console.log(isNaN(accumulatedTime));
+        accumulatedTime+=(endTime-startTime)/1000;
+
+        items[accumulatedTimeKey] = accumulatedTime;
+
+        console.log(items);
+
+        chrome.storage.sync.set(items, function(){
+            console.log("saved time: " + accumulatedTime);
+            //console.log(typeof(accumulatedTime));
+            //console.log(isNaN(accumulatedTime));
+
+        });
         
     });
+    
+    console.log("accTime: "+accumulatedTime);
+
 }
+
+//OBSOLETE BECAUSE WILL MERGE STORE ACCUMULATED TIME WITH GET TIME
+//function storeAccumulatedTime(){
+//    var items = {};
+//    
+//    while(accumulatedTime == undefined || isNaN(accumulatedTime)){   
+//        alert("accumulated time:" + accumulatedTime);
+//        
+//        if(accTimeUndefined) accumulatedTime = 0;
+//    }
+//    
+//    console.log((endTime-startTime)/1000);
+//    
+//    accumulatedTime+=(endTime-startTime)/1000;
+//    
+//    items[accumulatedTimeKey] = accumulatedTime;
+//    
+//    console.log(items);
+//    
+//    chrome.storage.sync.set(items, function(){
+//        console.log("saved time: " + accumulatedTime);
+//        //console.log(typeof(accumulatedTime));
+//        //console.log(isNaN(accumulatedTime));
+//        
+//    });
+//    
+//    accTimeUndefined=false;
+//}
 
 //OBSOLETE VERSION MAY NEED THIS FOR REFERENCE
 /*function storeAccumulatedTime(){
