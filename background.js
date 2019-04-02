@@ -124,23 +124,99 @@ var accumulatedTimeKey='accTimeMS'
 var startTime;
 var endTime;
 
+var firstTimer;
 function startTimer(){
     console.log("\nStart Timer");
     
     //getAccumulatedTime();
-    //setIntervalTimer = setInterval(updateTime, 1000);
-    //setIntervalTimer = setInterval(updateTimeDisplay, 5000);
+    
+    //MIGHT WANT TO UNCOMMENT
+    
+    //AY CARAMBA
+    //setIntervalTimer = setInterval(updateTimeDisplay, 60000);
+    
     startTime=Date.now();
     
     timerOn=true;
+    
+    chrome.storage.sync.get(accumulatedTimeKey, function(items){
+        console.log(items[accumulatedTimeKey]);
+        accumulatedTime = items[accumulatedTimeKey];
+        
+        //use the accumulated time to make a timeout
+        setIntervalTimer = setTimeout(initiateFutureUpdates, (60-accumulatedTime%60)*100);
+    });
 }
+
+function initiateFutureUpdates(){
+    //updateTimeDisplay(currDisplayNumber+60);
+    
+    //make the current updates right?
+    futureUpdates();
+    
+    //test to see if the interval timer runs immediately after this
+    setIntervalTimer = setInterval(futureUpdates, 6000);
+}
+
+function futureUpdates(){
+    //set the temp time
+    chrome.storage.sync.get(accumulatedTimeKey, function(items){
+        ///*function storeAccumulatedTime(){
+        console.log(items);
+        items["tempTimeKey"] = accumulatedTime+(Date.now()-startTime)/1000;
+
+        chrome.storage.sync.set(items, function(){
+            chrome.tabs.executeScript({file: 'facebookLiveTimerDisplay.js'});
+        });
+    });
+    
+    
+    ///////// PUT ALERT FOR EVERY 5 MIN USE!
+//    if(currDisplayNumber % 5 == 0){
+//        for(var i=0;i<5;i++){
+//            alert("You have been using Facebook for another five minutes. Please consider closing your tab.");
+//        }
+//        /*var okClicked = window.confirm("Should the time be cleared?");
+//        if(okClicked){
+//            alert()
+//        }*/
+//    }
+}
+
+
+//chrome.storage.sync.get(accumulatedTimeKey, function(items){
+//            ///*function storeAccumulatedTime(){
+//            console.log(items);
+//            items["tempTimeKey"] = accumulatedTime;
+//
+//            console.log(items);
+//            alert(items);
+//            
+//            chrome.storage.sync.set(items, function(){
+//                chrome.tabs.executeScript({file: 'facebookLiveTimerDisplay.js'});
+//                
+//                //console.log(typeof(accumulatedTime));
+//                //console.log(isNaN(accumulatedTime));
+//                
+//            });
+
+
+////called to when the page is first loaded
+////uses setTimeout since it may be in the middle of a minute
+//function firstTimeUpdate(displayNumber){
+//    console.log("FIRSTtime: "+ displayNumber);
+//    
+//    updateTimeDisplay(displayNumber);
+//    setIntervalTimer = setTimeout(initiateFutureUpdates, (60-displayNumber%60)*100);
+//}
+
 
 function stopTimer(){
     console.log("\nStop Timer");
     endTime=Date.now();
     
     storeAccumulatedTime();
-    //clearTimeout(setIntervalTimer);
+    clearTimeout(setIntervalTimer);
     timerOn=false;
     
 }
@@ -235,27 +311,80 @@ function storeAccumulatedTime(){
 }*/
 
 
+//MAYBE DELETE THIS SECTION!! 
+//AY CARAMBA
 
-function updateTimeDisplay(){
-    var displayNumber=0;
-    if(accumulatedTime == undefined || isNaN(accumulatedTime)){   
-        alert("accumulated time:" + accumulatedTime);
-        displayNumber = 0;
-    }else{
-        displayNumber=accumulatedTime;
-    }
-    
-//    console.log(displayNumber);
-    displayNumber+=(Date.now()-startTime)/1000;
-    
-    
-    console.log(displayNumber);
-    
-    var timeDisplayElem = document.getElementById("asdfFacebookTimerfdas");
-    
-    console.log(document);
-    console.log(timeDisplayElem);
-    
-    //timeDisplayElem.innerHTML = Math.round(displayNumber / 60);
-    
-}
+//this will preferably be called from onFacebook.js
+//function firstTimeUpdate(){
+//    displayNumber = updateTimeDisplay();
+//    setIntervalTimer = setTimeout(initiateFutureUpdates, (60-displayNumber%60)*1000);
+//}
+
+//function initiateFutureUpdates(){
+//    updateTimeDisplay();
+//    setIntervalTimer = setInterval(futureUpdates, 60000);
+//}
+//
+//function futureUpdates(){
+//    displayNumber = updateTimeDisplay();
+//    if(displayNumber % 5 == 0){
+//        for(var i=0;i<5;i++){
+//            alert("You have been using Facebook for another five minutes. Please consider closing your tab.");
+//        }
+//        /*var okClicked = window.confirm("Should the time be cleared?");
+//        if(okClicked){
+//            alert()
+//        }*/
+//    }
+//}
+//
+//function updateTimeDisplay(){
+//    var displayNumber=0;
+//    if(accumulatedTime == undefined || isNaN(accumulatedTime)){   
+//        alert("accumulated time:" + accumulatedTime);
+//        displayNumber = 0;
+//    }else{
+//        displayNumber=accumulatedTime;
+//    }
+//    
+////    console.log(displayNumber);
+//    displayNumber+=(Date.now()-startTime)/1000;
+//    
+//    
+//    console.log(document);
+//    
+//    chrome.tabs.executeScript({
+//        file: 'facebookLiveTimerDisplay.js'
+//    });
+//
+//    
+//    //var timeDisplayElem = document.getElementById("asdfFacebookTimerfdas");
+//    
+//   //timeDisplayElem = document.getElementById("asdfFacebookTimerfdas");
+//    
+//    //timeDisplayElem.innerHTML = timeStringOnFB(displayNumber);
+//    
+//    return displayNumber;   
+//}
+
+//function timeStringOnFB(secondsPassed){
+//    var minutesDisplay = Math.round(secondsPassed / 60) % 60;
+//    var hours = Math.floor(secondsPassed / 3600);
+//    
+//    var displayString = "";
+//    
+//    if(isNaN(minutesDisplay)){
+//        minutes=0;
+//    }
+//    if(isNaN(hours)){
+//        hours=0;
+//    }
+//    
+//    if(hours > 0){
+//        displayString+=hours + "hr ";
+//    }
+//    displayString += minutesDisplay + "mins";
+//    
+//    return displayString;
+//}
+
