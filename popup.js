@@ -123,10 +123,19 @@ function timeString(){
     //console.log(accumulatedTime);
     //console.log(secondsPassed);
     
-    var minutes = Math.floor(secondsPassed / 60);
-    var seconds = Math.floor(secondsPassed % 60);
+    
+    
+    
+    var hours = Math.floor(secondsPassed / 3600);
+    var minutes = Math.floor(secondsPassed / 60) % 60;
+    var seconds = Math.round(secondsPassed % 60);
     
     var displayString = "";
+
+    if(isNaN(hours)){
+        hours=0;
+    }
+    
     
     if(isNaN(minutes)){
         minutes=0;
@@ -135,7 +144,10 @@ function timeString(){
         seconds=0;
     }
     
-    displayString= minutes + "m " + seconds + "s";
+    if(hours > 0){
+        displayString+=hours + "hr ";
+    }
+    displayString += minutes + "m " + seconds + "s";
 
     /*
     if(seconds < 10)
