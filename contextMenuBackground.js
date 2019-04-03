@@ -1,4 +1,5 @@
 console.log("contextMenuBackground.js"); //this is called right when the extension is installed
+//get document would get the chrome extension document and NOT the Facebook document
 
 //set up menu at install time
 chrome.runtime.onInstalled.addListener(createMenu);
@@ -9,7 +10,7 @@ function createMenu(){
     createNotifsItem();
     createFeedItem();
 }
- 
+
 var enableParentId;
 var enableBlockingId;
 var disableBlockingId;
@@ -135,6 +136,8 @@ chrome.contextMenus.onClicked.addListener(menuClickedHandler);
 
 //onClicked callback function
 function menuClickedHandler(info, tabs){
+    alert("Menu clicked");
+    
     if(info.menuItemId == enableBlockingId){
         blockAll();
     }else if(info.menuItemId == disableBlockingId){

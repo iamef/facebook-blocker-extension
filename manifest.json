@@ -3,7 +3,7 @@
 
   "name": "Selective Blocker and Timer for Facebook™",
   "description": "Transform your distracted time on Facebook into focused time.",
-  "version": "0.0.0.9",
+  "version": "0.0.1.0",
   "icons": {
     "16": "icons/fblocker_logo_16.png",
     "48": "icons/fblocker_logo_48_thic.png",
