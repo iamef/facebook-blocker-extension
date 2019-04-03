@@ -11,7 +11,7 @@
   },
 
   "background":{
-    "scripts": ["background.js", "contextMenuBackground.js", "onFacebookListener.js"],
+    "scripts": ["background.js", "onFacebookListener.js", "contextMenuBackground.js"],
     "persistent": false
   },
     
