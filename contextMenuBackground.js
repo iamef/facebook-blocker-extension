@@ -136,8 +136,7 @@ chrome.contextMenus.onClicked.addListener(menuClickedHandler);
 
 //onClicked callback function
 function menuClickedHandler(info, tabs){
-    alert("Menu clicked");
-    
+    //alert("Menu clicked");
     if(info.menuItemId == enableBlockingId){
         blockAll();
     }else if(info.menuItemId == disableBlockingId){

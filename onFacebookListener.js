@@ -48,17 +48,29 @@ chrome.runtime.onMessage.addListener(function(message, sender, sendResponse){
                 chrome.tabs.executeScript({file: 'facebookLiveTimerDisplay.js'});
             });
         });
+        sendResponse({received: true});
+    }else if(message.storeClearedTime == "please"){
+        //alert("I will clear it!");
+        //store cleared time in accumulatedTimey
+        var items = {};
+        accumulatedTime = 0;
+        items[accumulatedTimeKey] = accumulatedTime;
+        chrome.storage.sync.set(items, function(){
+            console.log("saved " + accumulatedTime);
+            console.log(items);    
+        });
         
     }
-    
 });
 
 function define(inItems){
-    if(inItems==undefined) alert("items[chatBlockedKey or notifsTopBarBlockedKey or newsfeedBlockedKey is undefined]");
+    //if(inItems==undefined) alert("items[chatBlockedKey or notifsTopBarBlockedKey or newsfeedBlockedKey is undefined]");
     if(inItems==undefined) return true;
     return inItems;
 }
 
+
+//TODO MOVE THE BLOCKING METHODS SINCE IT MAKES MORE SENSE FOR IT TO BE ELSEWHERE
 /*---------UNBLOCKING------*/
 function unblockAll(){
     unblockChat();
