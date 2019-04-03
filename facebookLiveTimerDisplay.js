@@ -1,8 +1,14 @@
 //use the stored temp time to update the time display
 chrome.storage.sync.get("tempTimeKey", function(items){
     //alert(items["tempTimeKey"]);
-    console.log(items["tempTimeKey"]);
-    updateTimeDisplay(items["tempTimeKey"]*10);
+    console.log('\n'+ items["tempTimeKey"]);
+    console.log("accTime: "
+                +Math.floor(items["tempTimeKey"]/3600) + "hrs "
+                +Math.floor(items["tempTimeKey"]/60 % 60) + "mins "
+                +items["tempTimeKey"]%60 + "s ");
+    
+    
+    updateTimeDisplay(items["tempTimeKey"]);
 });
 
 function updateTimeDisplay(displayNumber){

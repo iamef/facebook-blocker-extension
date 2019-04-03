@@ -127,7 +127,7 @@ function startTimer(){
         accumulatedTime = items[accumulatedTimeKey];
         
         //use the accumulated time to make a timeout
-        setIntervalTimer = setTimeout(initiateFutureUpdates, (60-accumulatedTime%60)*100);
+        setIntervalTimer = setTimeout(initiateFutureUpdates, (60-accumulatedTime%60)*1000);
     });
 }
 
@@ -136,7 +136,7 @@ function initiateFutureUpdates(){
     futureUpdates();
     
     //test to see if the interval timer runs immediately after this
-    setIntervalTimer = setInterval(futureUpdates, 6000);
+    setIntervalTimer = setInterval(futureUpdates, 60000);
 }
 
 function futureUpdates(){
@@ -190,18 +190,18 @@ function storeAccumulatedTime(){
 
         items[accumulatedTimeKey] = accumulatedTime;
 
-        console.log(items);
-
         chrome.storage.sync.set(items, function(){
             console.log("saved time: " + accumulatedTime);
             //console.log(typeof(accumulatedTime));
             //console.log(isNaN(accumulatedTime));
+            
+            console.log("accTime: "
+                +Math.floor(accumulatedTime/3600) + "hrs "
+                +Math.floor(accumulatedTime/60 % 60) + "mins "
+                +accumulatedTime%60 + "s ");
 
         });
         
     });
-    
-    console.log("accTime: "+accumulatedTime);
-
 }
 

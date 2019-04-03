@@ -44,10 +44,6 @@ chrome.runtime.onMessage.addListener(function(message, sender, sendResponse){
         chrome.storage.sync.get(accumulatedTimeKey, function(items){
             console.log(items);
             items["tempTimeKey"] = accumulatedTime;
-
-            console.log(items);
-            alert(items);
-            
             chrome.storage.sync.set(items, function(){
                 chrome.tabs.executeScript({file: 'facebookLiveTimerDisplay.js'});
             });
