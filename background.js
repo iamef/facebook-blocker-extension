@@ -57,20 +57,50 @@ chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab){
 //works when windows are removed and created and so forth
 chrome.windows.onFocusChanged.addListener(function(windowId){
     if(windowId == chrome.windows.WINDOW_ID_NONE){
+        //console.log("No window ID");
         dealWithTimer(-1);
-        
+    }else{
+        chrome.tabs.query({active: true}, function(tabs){
+            tabs.forEach(function(tab){
+                //console.log("tabWId: " + tab.windowId + ", WID: "+windowId +", url " +tab.url);
+                if(tab.windowId == windowId){
+                    dealWithTimer(tab);
+                }
+            })
+        });
     }
-    chrome.tabs.query({active: true}, function(tabs){
-        tabs.forEach(function(tab){
-            //console.log("tabWId: " + tab.windowId + ", WID: "+windowId +", url " +tab.url);
-            if(tab.windowId == windowId){
-                dealWithTimer(tab);
-            }
-        })
-    });
+});
+
+
+
+var prevTab = null;
+var currTab = null;
+chrome.idle.setDetectionInterval(15); //set idle interval to 15 seconds
+chrome.idle.onStateChanged.addListener(function(newState){
+    var date = new Date();
+    var s = (newState + " @ " + date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds());
+    
+    if(newState != chrome.idle.IdleState.ACTIVE) {
+        s="CARAMBA! "+s;
+        console.log(s);
+        dealWithTimer('idle');
+    }else{
+        console.log(s);
+        dealWithTimer(prevTab);
+    }
+    
+    //console.log(s);
+    console.log("currTab");
+    console.log(currTab);
+    console.log("prevTab");
+    console.log(prevTab);
+    //alert(s); 
+    
 });
 
 function dealWithTimer(tab){
+    if(currTab != 'idle') prevTab = currTab;
+    currTab = tab;
     if(onFacebook(tab)){
         if(!timerOn){
 //            alert("on facebook and timer was off");
@@ -91,7 +121,7 @@ function onFacebook(tab){
     //criteria: the tab must be active
     //the window must be focused
     //it must be a FB url
-    if(tab == -1 || tab == undefined || !tab.active){
+    if(tab == -1 || tab == undefined || !tab.active || tab == 'idle' ){
         //alert("the tab is not active");
         return false;
     }
@@ -123,7 +153,7 @@ function startTimer(){
     timerOn=true;
     
     chrome.storage.sync.get(accumulatedTimeKey, function(items){
-        console.log(items[accumulatedTimeKey]);
+        console.log("Start time: " + items[accumulatedTimeKey]);
         accumulatedTime = items[accumulatedTimeKey];
         
         //use the accumulated time to make a timeout
@@ -143,7 +173,7 @@ function futureUpdates(){
     //get the temp time
     //to set the temp time
     chrome.storage.sync.get(accumulatedTimeKey, function(items){
-        console.log(items);
+        console.log("Future updates: " + items[accumulatedTimeKey]);
         items["tempTimeKey"] = accumulatedTime+(Date.now()-startTime)/1000;
 
         //set the temp time
@@ -181,7 +211,7 @@ function stopTimer(){
 
 function storeAccumulatedTime(){
     chrome.storage.sync.get(accumulatedTimeKey, function(items){
-        console.log(items[accumulatedTimeKey]);
+        //console.log("storedTime: " + items[accumulatedTimeKey]);
         accumulatedTime = items[accumulatedTimeKey];
         
         console.log("Time spent: " + (endTime-startTime)/1000);
@@ -191,7 +221,7 @@ function storeAccumulatedTime(){
         items[accumulatedTimeKey] = accumulatedTime;
 
         chrome.storage.sync.set(items, function(){
-            console.log("saved time: " + accumulatedTime);
+            //console.log("saved time: " + accumulatedTime);
             //console.log(typeof(accumulatedTime));
             //console.log(isNaN(accumulatedTime));
             
