@@ -21,7 +21,7 @@ function addTimerUIOnFacebook(){
     timerTest.href="#";
     
     var timerParent = document.querySelectorAll('[data-click="profile_icon"]')[0];
-    timerParent.insertBefore(timerTest, timerParent.childNodes[0]);
+    if(timerParent != undefined) timerParent.insertBefore(timerTest, timerParent.childNodes[0]);
     
     timerTest.onclick=clearTime;
 }
@@ -30,11 +30,11 @@ function addTimerUIOnFacebook(){
 function clearTime(){
     var okClicked = window.confirm("Should the time be cleared?");
     if(okClicked){
-        document.getElementById("asdfFacebookTimerfdas").innerHTML = "0mins";
         
         //tell onFacebookListener to store time since no permission here
         chrome.runtime.sendMessage({storeClearedTime: "please"}, function(response){
-            //alert("received: " + response.received);
+            alert("received: " + response.received);
+            document.getElementById("asdfFacebookTimerfdas").innerHTML = "0mins";
         });
     }
 }

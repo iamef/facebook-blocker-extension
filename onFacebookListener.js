@@ -59,7 +59,7 @@ chrome.runtime.onMessage.addListener(function(message, sender, sendResponse){
             console.log("saved " + accumulatedTime);
             console.log(items);    
         });
-        
+        sendResponse({received: true});
     }
 });
 
