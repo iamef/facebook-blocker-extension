@@ -29,6 +29,7 @@ var enabledKey='enabled';
 var notifsTopBarBlockedKey='notifsTopBarBlocked';
 var chatBlockedKey='chatBlocked';
 var newsfeedBlockedKey='feedBlocked';
+var fbAlertsKey='fbAlerts';
 function updateSettingsDisplay(){
     chrome.storage.sync.get(enabledKey, function(items){
         //enabled section
@@ -60,7 +61,14 @@ function updateSettingsDisplay(){
             newsBlocked=true;
         }
         document.getElementById("newsfeed").checked=newsBlocked;
-    
+        
+        //fb alerts
+        var fbAlertsOn = items[fbAlertsKey];
+        if(fbAlertsOn==undefined){
+            fbAlertsOn=true;
+        }
+        document.getElementById("fbAlerts").checked=fbAlertsOn;
+        
     });
 }
 
@@ -84,6 +92,10 @@ function saveSettings(){
     var newsBlocked = document.getElementById('newsfeed').checked;
     items[newsfeedBlockedKey] = newsBlocked;
     //EDIIITTTT FRRROOOMMM HEERREEE .   items[chatBlockedKey] = chatBlocked;
+    
+    //fbAlerts
+    var fbAlertsOn = document.getElementById("fbAlerts").checked
+    items[fbAlertsKey] = fbAlertsOn;
     
     chrome.storage.sync.set(items, function() {
           alert("Settings saved.");

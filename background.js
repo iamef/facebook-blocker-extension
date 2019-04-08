@@ -187,6 +187,7 @@ function futureUpdates(){
     });
 }
 
+var fbAlertsKey='fbAlerts';
 function usageAlert(timeSpent){
     console.log("Usage alert: " + timeSpent);
     
@@ -197,17 +198,24 @@ function usageAlert(timeSpent){
     chrome.storage.sync.get(accumulatedTimeKey, function(items){console.log(items)});
     
     */
+    chrome.storage.sync.get(fbAlertsKey, function(items){
+        console.log("FB alerts on? " + items[fbAlertsKey]);
+        
+        //!undefined is true
+        //undefined==false is false
+        if(items[fbAlertsKey] == false) return;
 
-    if(Math.round(timeSpent) % 5 == 0){
-        var okClicked = window.confirm("You have been using Facebook for another five minutes. You will be leave Facebook if you click OK.");
-        if(okClicked){
-            //alert("ok c");
-            chrome.tabs.query({active:true, currentWindow:true}, function(tabs){
-                var tab = tabs[0]; //tabs should only contain one tab.
-                chrome.tabs.update(tab.id, {url: 'chrome://newtab/'});
-            });
+        if(Math.round(timeSpent/60) % 5 == 0){
+            var okClicked = window.confirm("You have been using Facebook for another five minutes. You will be leave Facebook if you click OK.");
+            if(okClicked){
+                //alert("ok c");
+                chrome.tabs.query({active:true, currentWindow:true}, function(tabs){
+                    var tab = tabs[0]; //tabs should only contain one tab.
+                    chrome.tabs.update(tab.id, {url: 'chrome://newtab/'});
+                });
+            }
         }
-    }
+    });
 }
 
 function stopTimer(){
