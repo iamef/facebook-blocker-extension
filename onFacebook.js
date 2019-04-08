@@ -32,6 +32,8 @@ function clearTime(){
     if(okClicked){
         
         //tell onFacebookListener to store time since no permission here
+        
+        //context invalidated when the page isn't reloaded after I updated the extension
         chrome.runtime.sendMessage({storeClearedTime: "please"}, function(response){
             alert("received: " + response.received);
             document.getElementById("asdfFacebookTimerfdas").innerHTML = "0mins";

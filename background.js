@@ -21,6 +21,7 @@ console.log("background.js"); //this is called right when the extension is insta
 chrome.browserAction.onClicked.addListener(function(activeTab)
 {
     var onNewTab = false;
+    //TODO use the currentWindow:true rather than tabs[0]
     chrome.tabs.query({active: true}, function(tabs){
         tab = tabs[0];
         if(tab.url == 'chrome://newtab/'){
@@ -60,6 +61,7 @@ chrome.windows.onFocusChanged.addListener(function(windowId){
         //console.log("No window ID");
         dealWithTimer(-1);
     }else{
+        //TODO use the currentWindow:true rather than loop through each tab
         chrome.tabs.query({active: true}, function(tabs){
             tabs.forEach(function(tab){
                 //console.log("tabWId: " + tab.windowId + ", WID: "+windowId +", url " +tab.url);
@@ -75,7 +77,7 @@ chrome.windows.onFocusChanged.addListener(function(windowId){
 
 var prevTab = null;
 var currTab = null;
-chrome.idle.setDetectionInterval(15); //set idle interval to 15 seconds
+chrome.idle.setDetectionInterval(30); //set idle interval to 30 seconds
 chrome.idle.onStateChanged.addListener(function(newState){
     var date = new Date();
     var s = (newState + " @ " + date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds());
@@ -173,30 +175,39 @@ function futureUpdates(){
     //get the temp time
     //to set the temp time
     chrome.storage.sync.get(accumulatedTimeKey, function(items){
-        console.log("Future updates: " + items[accumulatedTimeKey]);
+        //console.log("Future updates: " + items[accumulatedTimeKey]);
         items["tempTimeKey"] = accumulatedTime+(Date.now()-startTime)/1000;
 
         //set the temp time
         chrome.storage.sync.set(items, function(){
             chrome.tabs.executeScript({file: 'facebookLiveTimerDisplay.js'});
         });
+        
+        usageAlert(items["tempTimeKey"]);
     });
 }
 
-//TODO implement this function
-//ATM want five minute alert
-function usageAlert(){
-        ///////// PUT ALERT FOR EVERY 5 MIN USE!
-//    if(currDisplayNumber % 5 == 0){
-//        for(var i=0;i<5;i++){
-//            alert("You have been using Facebook for another five minutes. Please consider closing your tab.");
-//        }
-//        /*var okClicked = window.confirm("Should the time be cleared?");
-//        if(okClicked){
-//            alert()
-//        }*/
-//    }
+function usageAlert(timeSpent){
+    console.log("Usage alert: " + timeSpent);
+    
+    //something to paste in console
+    /*
+    chrome.storage.sync.get(accumulatedTimeKey, function(items){items[accumulatedTimeKey] = 596; chrome.storage.sync.set(items, function(){});});
 
+    chrome.storage.sync.get(accumulatedTimeKey, function(items){console.log(items)});
+    
+    */
+
+    if(Math.round(timeSpent) % 5 == 0){
+        var okClicked = window.confirm("You have been using Facebook for another five minutes. You will be leave Facebook if you click OK.");
+        if(okClicked){
+            //alert("ok c");
+            chrome.tabs.query({active:true, currentWindow:true}, function(tabs){
+                var tab = tabs[0]; //tabs should only contain one tab.
+                chrome.tabs.update(tab.id, {url: 'chrome://newtab/'});
+            });
+        }
+    }
 }
 
 function stopTimer(){
