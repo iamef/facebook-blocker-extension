@@ -50,15 +50,22 @@ chrome.tabs.onActivated.addListener(function(info){
     });
     
 });
+
+var currWindowID;
 //checks if tab updates to contain Facebook
 chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab){   
-    if(tab.active) dealWithTimer(tab);
+    if(tab.active && tab.windowId == currWindowID) dealWithTimer(tab);
+    
+    if(tab.active && tab.windowId != currWindowID) console.log("Maybe thumbs up: don't deal with timer")
 });
 //checks if we change to a different window which might contain Facebook
 //works when windows are removed and created and so forth
 chrome.windows.onFocusChanged.addListener(function(windowId){
+    currWindowID = windowId;
+    
+    console.log(windowId);
     if(windowId == chrome.windows.WINDOW_ID_NONE){
-        //console.log("No window ID");
+        console.log("No window ID");
         dealWithTimer(-1);
     }else{
         //TODO use the currentWindow:true rather than loop through each tab
