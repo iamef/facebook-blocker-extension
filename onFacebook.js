@@ -7,11 +7,13 @@ chrome.runtime.sendMessage({onFacebook: true}, function(response){
     //alert("received: " + response.received);
 });
 
-addTimerUIOnFacebook();
-
-chrome.runtime.sendMessage({addedTimerUI: true}, function(response){
-    //alert("received: " + response.received);
-});
+var onFacebookTimerDisplay = false; 
+if(onFacebookTimerDisplay){
+    addTimerUIOnFacebook();
+    chrome.runtime.sendMessage({addedTimerUI: true}, function(response){
+        //alert("received: " + response.received);
+    });
+}
 
 function addTimerUIOnFacebook(){
     var timerTest = document.createElement("a");

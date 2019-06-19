@@ -154,6 +154,8 @@ var startTime;
 var endTime;
 
 var firstTimer;
+var alertTimeMins=2;//TODO make this less sketch as well, make this stored as a variable
+
 function startTimer(){
     console.log("\nStart Timer");
     
@@ -166,54 +168,70 @@ function startTimer(){
         accumulatedTime = items[accumulatedTimeKey];
         
         //use the accumulated time to make a timeout
-        setIntervalTimer = setTimeout(initiateFutureUpdates, (60-accumulatedTime%60)*1000);
+        var onFacebookTimerDisplay = false; //TODO make this less sketch
+        //alertTimeMins = 5;//TODO make this less sketch as well
+        if(onFacebookTimerDisplay) setIntervalTimer = setTimeout(initiateFutureUpdates, (60-accumulatedTime%60)*1000);
+        else setIntervalTimer = setTimeout(timerAlert, ((alertTimeMins - (accumulatedTime/60)%alertTimeMins)*60)*1000);
+        
+        //setTimeout(alertFunc, 3000);
     });
 }
 
-function initiateFutureUpdates(){
-    //make the current update
-    futureUpdates();
-    
-    //test to see if the interval timer runs immediately after this
-    setIntervalTimer = setInterval(futureUpdates, 60000);
-}
+//TODO delete this code
+//function alertFunc() {
+//  alert("Immediate!");
+//}
 
-function futureUpdates(){
-    //get the temp time
-    //to set the temp time
-    chrome.storage.sync.get(accumulatedTimeKey, function(items){
-        //console.log("Future updates: " + items[accumulatedTimeKey]);
-        items["tempTimeKey"] = accumulatedTime+(Date.now()-startTime)/1000;
+{ //STUFF INVOLVING THE ON FACEBOOK TIMER / USAGE ALERT
+    function initiateFutureUpdates(){
+        //make the current update
+        futureUpdates();
 
-        //set the temp time
-        chrome.storage.sync.set(items, function(){
-            chrome.tabs.executeScript({file: 'facebookLiveTimerDisplay.js'});
+        //test to see if the interval timer runs immediately after this
+        setIntervalTimer = setInterval(futureUpdates, 60000);
+    }
+    function futureUpdates(){
+        //get the temp time
+        //to set the temp time
+        chrome.storage.sync.get(accumulatedTimeKey, function(items){
+            //console.log("Future updates: " + items[accumulatedTimeKey]);
+            items["tempTimeKey"] = accumulatedTime+(Date.now()-startTime)/1000;
+
+            //set the temp time
+            chrome.storage.sync.set(items, function(){
+                chrome.tabs.executeScript({file: 'facebookLiveTimerDisplay.js'});
+            });
+
+            usageAlert(items["tempTimeKey"]);
         });
-        
-        usageAlert(items["tempTimeKey"]);
-    });
-}
+    }
+    var fbAlertsKey='fbAlerts';
+    function usageAlert(timeSpent){
+        console.log("Usage alert: " + timeSpent);
 
-var fbAlertsKey='fbAlerts';
-function usageAlert(timeSpent){
-    console.log("Usage alert: " + timeSpent);
+        //something to paste in console
+        /*
+        chrome.storage.sync.get(accumulatedTimeKey, function(items){items[accumulatedTimeKey] = 596; chrome.storage.sync.set(items, function(){});});
+
+        chrome.storage.sync.get(accumulatedTimeKey, function(items){console.log(items)});
+
+        */
+
+        if(Math.round(timeSpent/60) % alertTimeMins == 0){
+            timerAlert();
+        }
+    }
     
-    //something to paste in console
-    /*
-    chrome.storage.sync.get(accumulatedTimeKey, function(items){items[accumulatedTimeKey] = 596; chrome.storage.sync.set(items, function(){});});
-
-    chrome.storage.sync.get(accumulatedTimeKey, function(items){console.log(items)});
     
-    */
-    chrome.storage.sync.get(fbAlertsKey, function(items){
-        console.log("FB alerts on? " + items[fbAlertsKey]);
-        
-        //!undefined is true
-        //undefined==false is false
-        if(items[fbAlertsKey] == false) return;
+    function timerAlert(){
+        chrome.storage.sync.get(fbAlertsKey, function(items){
+            console.log("FB alerts on? " + items[fbAlertsKey]);
 
-        if(Math.round(timeSpent/60) % 5 == 0){
-            var okClicked = window.confirm("You have been using Facebook for another five minutes. You will be leave Facebook if you click OK.");
+            //!undefined is true
+            //undefined==false is false
+            if(items[fbAlertsKey] == false) return;
+        
+            var okClicked = window.confirm("You have been using Facebook for another "+alertTimeMins+" minutes. You will be leave Facebook if you click OK. \n\n" + "Time: "+ timeString(accumulatedTime+(Date.now()-startTime)/1000));
             if(okClicked){
                 //alert("ok c");
                 chrome.tabs.query({active:true, currentWindow:true}, function(tabs){
@@ -221,10 +239,10 @@ function usageAlert(timeSpent){
                     chrome.tabs.update(tab.id, {url: 'chrome://newtab/'});
                 });
             }
-        }
-    });
+        });
+    }
 }
-
+    
 function stopTimer(){
     console.log("\nStop Timer");
     endTime=Date.now();
@@ -259,5 +277,11 @@ function storeAccumulatedTime(){
         });
         
     });
+}
+
+function timeString(time){
+    return Math.floor(time/3600) + "hrs "
+                +Math.floor(time/60 % 60) + "mins "
+                +time%60 + "s "
 }
 
