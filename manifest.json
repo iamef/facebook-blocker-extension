@@ -11,7 +11,8 @@
   },
 
   "background":{
-    "scripts": ["background.js", "onFacebookListener.js", "contextMenuBackground.js"],
+    "css": ["thirdParty/jquery-ui-1.12.1.custom/jquery-ui.css"],
+    "scripts": ["thirdParty/jquery-3.4.1.min.js", "thirdParty/jquery-ui-1.12.1.custom/jquery-ui.js","background.js", "onFacebookListener.js", "contextMenuBackground.js"],
     "persistent": false
   },
     
