@@ -39,6 +39,12 @@ chrome.runtime.onMessage.addListener(function(message, sender, sendResponse){
             }
         });
         sendResponse({received: true});
+    }else if(message.leaveFacebook){
+        alert("Will leave Facebook sometime...");
+        chrome.tabs.query({active:true, currentWindow:true}, function(tabs){
+            var tab = tabs[0]; //tabs should only contain one tab.
+            chrome.tabs.update(tab.id, {url: 'chrome://newtab/'});
+        });
     }else if(message.addedTimerUI){
         //update the on Facebook timer display
         chrome.storage.sync.get(accumulatedTimeKey, function(items){

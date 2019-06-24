@@ -25,11 +25,6 @@ function createTimeAlertDialog(){
     timeDialog.innerHTML = "You have been using Facebook for <em>another</em> <br><center><strong>2 minutes</strong>.</center><br> Please do yourself a favor and leave Facebook.";
     document.body.appendChild(timeDialog);
 
-    $(".ui-widget-header .ui-icon").css("background-image",chrome.runtime.getURL("images/ui-icons_444444_256x240.png"));
-    $(".ui-button .ui-icon").css("background-image",chrome.runtime.getURL("images/ui-icons_777777_256x240.png"));
-            
-    
-    
     $("#timeAlertDialog").dialog({
         dialogClass: "timeAlertDialog",
         autoOpen: false,
@@ -38,23 +33,13 @@ function createTimeAlertDialog(){
             {
                 text: "Leave Facebook",
                 click: function() {
-                    //chrome.runtime.sendMesage({leaveFacebook: true});
-                    
+                    chrome.runtime.sendMessage({leaveFacebook: true});
                     $(this).dialog( "close" );
                 }  
             },
-            /*{
-                text: "Ok",
-                click: function() {
-                    $(this).dialog( "close" );
-                }
-            }*/
+            
         ],
         open: function(event, ui) {
-            //$(".ui-widget-header .ui-icon").css("background-image",chrome.runtime.getURL("images/ui-icons_444444_256x240.png"));
-            //$(".ui-button .ui-icon").css("background-image",chrome.runtime.getURL("images/ui-icons_777777_256x240.png"));
-            
-            
             $(event.target).parent().css('position','fixed');
             $(event.target).parent().css('background-color','lightgrey');
             $(event.target).css("font-size", "20px");
@@ -76,14 +61,6 @@ function createTimeAlertDialog(){
             $(".timeAlertDialog .ui-dialog-buttonpane .ui-dialog-buttonset .ui-button.ui-corner-all.ui-widget").css("margin", "0px");
             $(".timeAlertDialog .ui-dialog-buttonpane .ui-dialog-buttonset .ui-button.ui-corner-all.ui-widget").css("font-weight", "bold");
             $(".timeAlertDialog .ui-dialog-buttonpane .ui-dialog-buttonset .ui-button.ui-corner-all.ui-widget").css("font-size", "20px");
-            
-            
-            console.log(chrome.runtime.getURL("images/ui-icons_444444_256x240.png"));
-            
-            
-            //font-weight: bold
-            
-            //$(".timeAlertDialog .ui-dialog-buttonpane").css("margin", "0px");
         }
     });
 }
