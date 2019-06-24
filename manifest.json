@@ -11,8 +11,8 @@
   },
 
   "background":{
-    "css": ["thirdParty/jquery-ui-1.12.1.custom/jquery-ui.css"],
-    "scripts": ["thirdParty/jquery-3.4.1.min.js", "thirdParty/jquery-ui-1.12.1.custom/jquery-ui.js","background.js", "onFacebookListener.js", "contextMenuBackground.js"],
+    "css": [],
+    "scripts": ["background.js", "onFacebookListener.js", "contextMenuBackground.js"],
     "persistent": false
   },
     
@@ -29,8 +29,8 @@
   
   "content_scripts": [{
     "matches": ["*://*.facebook.com/*", "*://*.messenger.com/*"],
-    "css": ["blockingCSS/chatContent.css", "blockingCSS/notificationsContent.css", "blockingCSS/newsfeedContent.css"],
-    "js": ["onFacebook.js"],
+    "css": ["thirdParty/jquery-ui-1.12.1.custom/jquery-ui.css", "blockingCSS/chatContent.css", "blockingCSS/notificationsContent.css", "blockingCSS/newsfeedContent.css"],
+    "js": ["thirdParty/jquery-3.4.1.min.js", "thirdParty/jquery-ui-1.12.1.custom/jquery-ui.js", "onFacebook.js"],
     "run_at": "document_end"
   }],
 
