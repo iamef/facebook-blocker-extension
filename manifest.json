@@ -30,7 +30,7 @@
   "content_scripts": [{
     "matches": ["*://*.facebook.com/*", "*://*.messenger.com/*"],
     "css": ["thirdParty/jquery-ui-1.12.1.custom/jquery-ui.css", "blockingCSS/chatContent.css", "blockingCSS/notificationsContent.css", "blockingCSS/newsfeedContent.css"],
-    "js": ["thirdParty/jquery-3.4.1.min.js", "thirdParty/jquery-ui-1.12.1.custom/jquery-ui.js", "onFacebook.js"],
+    "js": ["thirdParty/jquery-3.4.1.min.js", "thirdParty/jquery-ui-1.12.1.custom/jquery-ui.js", "onFacebook.js", "onFacebookAlert.js"],
     "run_at": "document_end"
   }],
 

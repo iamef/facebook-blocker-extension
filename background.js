@@ -226,19 +226,27 @@ function startTimer(){
     function timerAlert(){
         chrome.storage.sync.get(fbAlertsKey, function(items){
             console.log("FB alerts on? " + items[fbAlertsKey]);
+            console.log("2 min alert time");
 
             //!undefined is true
             //undefined==false is false
             if(items[fbAlertsKey] == false) return;
-        
-            var okClicked = window.confirm("You have been using Facebook for another "+alertTimeMins+" minutes. You will be leave Facebook if you click OK. \n\n" + "Time: "+ timeString(accumulatedTime+(Date.now()-startTime)/1000));
+                        
+            chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+                chrome.tabs.sendMessage(tabs[0].id, {timeAlert: alertTimeMins});
+            });
+            
+            //chrome.runtime.sendMessage({timeAlert: alertTimeMins});
+            
+            
+            /*var okClicked = window.confirm("You have been using Facebook for another "+alertTimeMins+" minutes. You will be leave Facebook if you click OK. \n\n" + "Time: "+ timeString(accumulatedTime+(Date.now()-startTime)/1000));
             if(okClicked){
                 //alert("ok c");
                 chrome.tabs.query({active:true, currentWindow:true}, function(tabs){
                     var tab = tabs[0]; //tabs should only contain one tab.
                     chrome.tabs.update(tab.id, {url: 'chrome://newtab/'});
                 });
-            }
+            }*/
         });
     }
 }

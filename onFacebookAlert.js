@@ -1,3 +1,21 @@
+/*
+Purpose
+1) UI of the time alert dialog
+2) receiving messages to open dialog
+*/
+
+chrome.runtime.onMessage.addListener(function(message, sender){
+    console.log(message);
+    if(typeof message.timeAlert == "number"
+      && message.timeAlert == 2){ //TODO comment the 2nd thing out later
+        console.log("message.timerAlert == 2");
+        
+        if(document.getElementById('timeAlertDialog') == null) 
+            createTimeAlertDialog();
+        openDialog();
+    }
+    
+});
 
 function createTimeAlertDialog(){
     var timeDialog = document.createElement("div");
@@ -20,6 +38,8 @@ function createTimeAlertDialog(){
             {
                 text: "Leave Facebook",
                 click: function() {
+                    //chrome.runtime.sendMesage({leaveFacebook: true});
+                    
                     $(this).dialog( "close" );
                 }  
             },
