@@ -47,7 +47,7 @@ function createTimeAlertDialog(){
             console.log($('body').css("width"));
             $(event.target).parent().css('width', '400px');
 
-
+            $('.timeAlertDialog').css("z-index","345678999");
             $(".timeAlertDialog .ui-dialog-titlebar").css("background-color", "darksalmon");
             $(".timeAlertDialog .ui-dialog-titlebar .ui-dialog-title").css("font-size", "25px");
             
