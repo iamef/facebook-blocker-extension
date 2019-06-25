@@ -45,7 +45,7 @@ chrome.runtime.onMessage.addListener(function(message, sender, sendResponse){
             var tab = tabs[0]; //tabs should only contain one tab.
             chrome.tabs.update(tab.id, {url: 'chrome://newtab/'});
         });
-    }else if(message.addedTimerUI){
+    }/*else if(message.addedTimerUI){
         //update the on Facebook timer display
         chrome.storage.sync.get(accumulatedTimeKey, function(items){
             console.log(items);
@@ -66,7 +66,7 @@ chrome.runtime.onMessage.addListener(function(message, sender, sendResponse){
             console.log(items);    
         });
         sendResponse({received: true});
-    }
+    }*/
 });
 
 function define(inItems){

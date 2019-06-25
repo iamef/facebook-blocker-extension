@@ -7,7 +7,7 @@ chrome.runtime.sendMessage({onFacebook: true}, function(response){
     //alert("received: " + response.received);
 });
 
-var onFacebookTimerDisplay = false; 
+/*var onFacebookTimerDisplay = false; 
 if(onFacebookTimerDisplay){
     addTimerUIOnFacebook();
     chrome.runtime.sendMessage({addedTimerUI: true}, function(response){
@@ -41,4 +41,4 @@ function clearTime(){
             document.getElementById("asdfFacebookTimerfdas").innerHTML = "0mins";
         });
     }
-}
+}*/
