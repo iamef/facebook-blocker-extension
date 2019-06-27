@@ -5,10 +5,10 @@ Purpose
 */
 
 chrome.runtime.onMessage.addListener(function(message, sender){
-    console.log(message);
+    //console.log(message);
     if(typeof message.timeAlert == "number"
       && message.timeAlert == 2){ //TODO comment the 2nd thing out later
-        console.log("message.timerAlert == 2");
+        //console.log("message.timerAlert == 2");
         
         if(document.getElementById('timeAlertDialog') == null) 
             createTimeAlertDialog();
@@ -44,7 +44,7 @@ function createTimeAlertDialog(){
             $(event.target).parent().css('background-color','lightgrey');
             $(event.target).css("font-size", "20px");
 
-            console.log($('body').css("width"));
+            //console.log($('body').css("width"));
             $(event.target).parent().css('width', '400px');
 
             $('.timeAlertDialog').css("z-index","345678999");
