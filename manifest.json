@@ -1,8 +1,8 @@
 {
   "manifest_version": 2,
 
-  "name": "Selective Blocker and Timer for Facebook™",
-  "description": "Transform your distracted time on Facebook into focused time.",
+  "name": "FBlocker and Timer",
+  "description": "Transform your distracted time on Facebook into focused time. Note: \"FB\" is trademark of Facebook Inc.",
   "version": "0.0.1.0",
   "icons": {
     "16": "icons/fblocker_logo_16.png",

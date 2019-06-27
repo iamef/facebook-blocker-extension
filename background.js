@@ -6,16 +6,17 @@ console.log("background.js"); //this is called right when the extension is insta
 2) ensure that the popup.html shows up
 3) takes care of the timer functions
 
+*/
+
 //fires when the extension is updated
-/*chrome.runtime.onInstalled.addListener(function(details){
+chrome.runtime.onInstalled.addListener(function(details){
     if(details.reason == "update"){
         alert("Extension Updated: \n\n"+
-              '-Renamed the extension from "FBlocker and Timer" to "Selective Blocker and Timer for Facebook™" \n'+
-              "-Rebranded the logo\n"+ 
-              "to avoid legal issues with Facebook."+
+              "-Add alert for every additional 2 minute use of Facebook\n" +
+              '-Renamed the extension from "Selective Blocker and Timer for Facebook™" to "FBlocker and Timer"\n'+
               "\nEmail csandapp@gmail.com or leave a review at tinyurl.com/fbblocker if you have any concerns or feedback. Thank you!");
     }
-});*/
+});
 
 //fires when the extension is clicked
 chrome.browserAction.onClicked.addListener(function(activeTab)
