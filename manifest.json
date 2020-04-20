@@ -3,7 +3,7 @@
 
   "name": "FBlocker and Timer",
   "description": "Transform your distracted time on Facebook into focused time. Note: \"FB\" is trademark of Facebook Inc.",
-  "version": "0.0.1.0",
+  "version": "1.0",
   "icons": {
     "16": "icons/fblocker_logo_16.png",
     "48": "icons/fblocker_logo_48_thic.png",
