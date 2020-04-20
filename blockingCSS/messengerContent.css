@@ -1,0 +1,5 @@
+/*_------------------Chat List on Messenger*/
+[aria-label='Conversations']{
+/*on fb.com/messages the list under the search bar*/
+    display: none;
+}
